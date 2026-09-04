@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#e42b3d">
-<title>かいものナビ Ver.0.18</title>
+<title>かいものナビ Ver.0.19</title>
 <style>
 :root{
   --accent:#e42b3d;--accent2:#1486d4;--dark:#a91d2e;
@@ -95,6 +95,27 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 }
 .bottom-nav button{min-height:48px;border-radius:14px;border:2px solid #cbd9e6;background:#fff;color:#07589b;font-weight:1000}
 .note{margin-top:10px;padding:10px;border-radius:12px;background:#eef8ff;color:#31546d;font-size:13px;line-height:1.5;font-weight:800}
+
+.app-modal{
+  position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+  padding:22px;background:rgba(9,16,28,.58);backdrop-filter:blur(5px)
+}
+.app-modal-card{
+  width:min(430px,100%);border:4px solid #fff;border-radius:26px;
+  background:linear-gradient(180deg,#fff,#eef7ff);padding:22px 18px;
+  box-shadow:0 18px 48px rgba(0,0,0,.35);text-align:center
+}
+.app-modal-icon{font-size:56px;line-height:1}
+.app-modal-title{margin-top:8px;font-size:30px;font-weight:1000;color:#b51e30}
+.app-modal-message{margin-top:10px;font-size:19px;line-height:1.55;font-weight:900;color:#31445c;white-space:pre-line}
+.app-modal-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:18px}
+.app-modal-actions.two{grid-template-columns:1fr 1fr}
+.app-modal-ok,.app-modal-cancel{
+  min-height:58px;border-radius:16px;font-size:20px;font-weight:1000
+}
+.app-modal-ok{border:3px solid #fff;background:linear-gradient(#2097e7,#0764b3);color:#fff}
+.app-modal-cancel{border:2px solid #cbd9e6;background:#fff;color:#07589b}
+
 @media(max-width:360px){.title{font-size:29px}.sub{font-size:23px}.themes{grid-template-columns:1fr}.remain{font-size:44px}.product .name{font-size:14px}}
 </style>
 </head>
@@ -105,7 +126,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <section id="memberScreen">
   <header class="hero">
     <div class="title">🛒 かいものナビ</div>
-    <div class="version">Ver.0.18</div>
+    <div class="version">Ver.0.19</div>
     <div class="purpose">つかう人を えらんでください。<br>ひとりひとり、よく買うものや画面を変えられます。</div>
   </header>
 
@@ -122,7 +143,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <section id="staffScreen" class="hidden">
   <header class="hero">
     <div class="title">⚙️ 職員用設定</div>
-    <div class="version">Ver.0.18</div>
+    <div class="version">Ver.0.19</div>
   </header>
   <section class="panel">
     <div class="big">その人用に作る</div>
@@ -164,7 +185,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
   <header class="hero">
     <div id="mainTitle" class="title">🛒 わたしのかいもの</div>
     <div class="sub">かいものナビ</div>
-    <div class="version">Ver.0.18</div>
+    <div class="version">Ver.0.19</div>
     <div class="purpose">🛒 おみせで つかおう！<br>カゴに商品を入れたら、ここでも同じ商品をタップ。</div>
   </header>
 
@@ -241,13 +262,26 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
   <button id="staffBtn">⚙️ 職員用</button>
 </div>
 
+
+<div id="appModal" class="app-modal hidden" role="dialog" aria-modal="true" aria-labelledby="appModalTitle">
+  <div class="app-modal-card">
+    <div id="appModalIcon" class="app-modal-icon">⚠️</div>
+    <div id="appModalTitle" class="app-modal-title">おしらせ</div>
+    <div id="appModalMessage" class="app-modal-message"></div>
+    <div id="appModalActions" class="app-modal-actions">
+      <button id="appModalCancel" class="app-modal-cancel hidden">やめる</button>
+      <button id="appModalOk" class="app-modal-ok">OK</button>
+    </div>
+  </div>
+</div>
+
 </div>
 
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
-const KEY="kainavi_v018";
-const OLD_KEYS=["kainavi_v017","kainavi_v016"];
+const KEY="kainavi_v019";
+const OLD_KEYS=["kainavi_v018","kainavi_v017","kainavi_v016"];
 
 const themes={
   game:["#e42b3d","#1486d4","#a91d2e","#ef3448","#1582cf"],
@@ -274,6 +308,34 @@ let cart=[];
 let selectedProduct=null;
 let budget=2500;
 let audioCtx=null;
+
+let modalResolve=null;
+function showNotice(message,title="おしらせ",icon="⚠️"){
+  $("appModalIcon").textContent=icon;
+  $("appModalTitle").textContent=title;
+  $("appModalMessage").textContent=message;
+  $("appModalCancel").classList.add("hidden");
+  $("appModalActions").classList.remove("two");
+  $("appModal").classList.remove("hidden");
+  return new Promise(resolve=>{modalResolve=()=>{closeModal();resolve(true)}});
+}
+function askConfirm(message,title="かくにん",icon="❓"){
+  $("appModalIcon").textContent=icon;
+  $("appModalTitle").textContent=title;
+  $("appModalMessage").textContent=message;
+  $("appModalCancel").classList.remove("hidden");
+  $("appModalActions").classList.add("two");
+  $("appModal").classList.remove("hidden");
+  return new Promise(resolve=>{
+    modalResolve=(answer)=>{closeModal();resolve(answer)};
+  });
+}
+function closeModal(){
+  $("appModal").classList.add("hidden");
+  modalResolve=null;
+}
+$("appModalOk").onclick=()=>{if(modalResolve)modalResolve(true)};
+$("appModalCancel").onclick=()=>{if(modalResolve)modalResolve(false)};
 
 function uid(){return "m_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,7)}
 function clone(x){return JSON.parse(JSON.stringify(x))}
@@ -409,14 +471,14 @@ document.querySelectorAll(".theme").forEach(b=>b.onclick=()=>{
 
 $("addProductBtn").onclick=()=>{
   const n=$("newName").value.trim(),p=Math.round(+$("newPrice").value);
-  if(!n||!p)return alert("商品名と値段を入れてください");
+  if(!n||!p){showNotice("商品名と値段を入れてください","入力をかくにん","✏️");return;}
   editingProducts.push({name:n,emoji:emoji(n),price:p,rate:8});
   $("newName").value="";$("newPrice").value="";renderEditor();
 };
 
 $("saveMemberBtn").onclick=()=>{
   const memberName=$("memberName").value.trim();
-  if(!memberName)return alert("メンバーの表示名を入れてください");
+  if(!memberName){showNotice("メンバーの表示名を入れてください","入力をかくにん","👤");return;}
   const member={
     id:editingId||uid(),
     memberName,
@@ -425,15 +487,17 @@ $("saveMemberBtn").onclick=()=>{
     defaultBalance:Math.max(1,Math.round(+$("defaultBalance").value||2500)),
     products:clone(editingProducts.filter(p=>p.name&&p.price>0))
   };
-  if(!member.products.length)return alert("商品を1つ以上登録してください");
+  if(!member.products.length){showNotice("商品を1つ以上登録してください","入力をかくにん","🛒");return;}
 
   const idx=store.members.findIndex(x=>x.id===member.id);
   if(idx>=0)store.members[idx]=member;else store.members.push(member);
   saveStore();renderMembers();showScreen("memberScreen");
 };
 
-$("deleteMemberBtn").onclick=()=>{
-  if(!editingId||!confirm("このメンバー設定を消しますか？"))return;
+$("deleteMemberBtn").onclick=async()=>{
+  if(!editingId)return;
+  const ok=await askConfirm("このメンバー設定を消しますか？","メンバー設定を消す","🗑️");
+  if(!ok)return;
   store.members=store.members.filter(x=>x.id!==editingId);
   if(store.activeMemberId===editingId)store.activeMemberId=null;
   saveStore();renderMembers();showScreen("memberScreen");
@@ -521,11 +585,11 @@ function meterColor(p){
 
 $("addCartBtn").onclick=()=>{
   const price=Math.round(+$("manualPrice").value);
-  if(!selectedProduct||!price)return alert("値段を入れてください");
+  if(!selectedProduct||!price){showNotice("値段を入れてください","入力をかくにん","💴");return;}
 
   const isOther=selectedProduct.direct&&!selectedProduct.name;
   const name=isOther?$("itemName").value.trim():selectedProduct.name;
-  if(isOther&&!name)return alert("しょうひんの なまえを 入れてください");
+  if(isOther&&!name){showNotice("しょうひんの なまえを 入れてください","入力をかくにん","✏️");return;}
 
   const before=pct();
   const item={
@@ -537,7 +601,8 @@ $("addCartBtn").onclick=()=>{
 
   if(after>=90){
     cart.pop();sound("90");
-    alert("⛔ ここまで！\nレジのために お金をのこそう");
+    if(navigator.vibrate)navigator.vibrate([130,70,130,70,220]);
+    showNotice("レジのために\nお金をのこそう","ここまで！","⛔");
     $("dashboard").scrollIntoView({behavior:"smooth"});return;
   }
 
@@ -582,9 +647,12 @@ $("startBtn").onclick=()=>{
   initAudio();budget=Math.max(1,Math.round(+$("balance").value||current.defaultBalance));cart=[];
   $("startScreen").classList.add("hidden");$("shopScreen").classList.remove("hidden");renderShopping();scrollTo(0,0);
 };
-$("restartBtn").onclick=()=>{if(confirm("買い物を最初からやり直しますか？"))resetShopping()};
+$("restartBtn").onclick=async()=>{
+  const ok=await askConfirm("買い物を最初からやり直しますか？","最初からやり直す","🔄");
+  if(ok)resetShopping();
+};
 $("checkoutBtn").onclick=()=>{
-  if(!cart.length)return alert("まだ商品がありません");
+  if(!cart.length){showNotice("まだ商品がありません","カゴをかくにん","🛒");return;}
   const t=total();$("finishTotal").textContent=yen(t);$("finishRemain").textContent=yen(budget-t);
   $("shopScreen").classList.add("hidden");$("finishScreen").classList.remove("hidden");
   initAudio();tone(1550,.07,0,"square");tone(500,.08,.17,"triangle");tone(780,.09,.23,"triangle");scrollTo(0,0);
