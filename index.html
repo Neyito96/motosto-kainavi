@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#e42b3d">
-<title>かいものナビ Ver.0.20</title>
+<title>かいものナビ Ver.0.21</title>
 <style>
 :root{
   --accent:#e42b3d;--accent2:#1486d4;--dark:#a91d2e;
@@ -126,7 +126,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <section id="memberScreen">
   <header class="hero">
     <div class="title">🛒 かいものナビ</div>
-    <div class="version">Ver.0.20</div>
+    <div class="version">Ver.0.21</div>
     <div class="purpose">つかう人を えらんでください。<br>ひとりひとり、よく買うものや画面を変えられます。</div>
   </header>
 
@@ -135,7 +135,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
     <div id="memberList" class="member-list"></div>
     <button id="addMemberBtn" class="primary">＋ 新しいメンバーを作る</button>
     <button id="motostoPresetBtn" class="secondary">🧪 サンロー（おためし）を追加</button>
-    <div class="note">設定はこのスマホ／ブラウザの中に保存されます。同じURLでも端末ごとに内容を変えられます。<br>※ サンローは架空のおためし用です。個人の買い物データは公開ページには入れていません。</div>
+    <div class="note">設定はこのスマホ／ブラウザの中に保存されます。同じURLでも端末ごとに内容を変えられます。<br>※ サンローは架空のおためし用です。6つの商品が入った見本から始められます。個人名や買い物履歴は公開ページには入れていません。</div>
   </section>
 </section>
 
@@ -143,7 +143,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <section id="staffScreen" class="hidden">
   <header class="hero">
     <div class="title">⚙️ 設定（職員）</div>
-    <div class="version">Ver.0.20</div>
+    <div class="version">Ver.0.21</div>
   </header>
   <section class="panel">
     <div class="big">その人用に作る</div>
@@ -185,7 +185,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
   <header class="hero">
     <div id="mainTitle" class="title">🛒 わたしのかいもの</div>
     <div class="sub">かいものナビ</div>
-    <div class="version">Ver.0.20</div>
+    <div class="version">Ver.0.21</div>
     <div class="purpose">🛒 おみせで つかおう！<br>カゴに商品を入れたら、ここでも同じ商品をタップ。</div>
   </header>
 
@@ -280,8 +280,8 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
-const KEY="kainavi_v020";
-const OLD_KEYS=["kainavi_v019","kainavi_v018","kainavi_v017","kainavi_v016"];
+const KEY="kainavi_v021";
+const OLD_KEYS=["kainavi_v020","kainavi_v019","kainavi_v018","kainavi_v017","kainavi_v016"];
 
 const themes={
   game:["#e42b3d","#1486d4","#a91d2e","#ef3448","#1582cf"],
@@ -291,8 +291,12 @@ const themes={
 };
 
 const motostoProducts=[
-["お茶","🍵",120,8],["ジュース","🥤",150,8],["パン","🍞",140,8],
-["おにぎり","🍙",130,8],["おかし","🍪",160,8],["チョコ","🍫",180,8]
+["アクエリアスゼロ","💧",98,8],
+["ドンタコス","🌮",100,8],
+["ポテトチップス","🥔",98,8],
+["カップヌードル シーフード","🍜",288,8],
+["アーモンドチョコ","🍫",268,8],
+["柿の種チョコ","🍘🍫",298,8]
 ].map(x=>({name:x[0],emoji:x[1],price:x[2],rate:x[3]}));
 
 let store={members:[],activeMemberId:null};
