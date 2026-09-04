@@ -8,7 +8,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>かいものナビ Ver.0.23</title>
+<title>かいものナビ Ver.0.24</title>
 <style>
 :root{
   --accent:#e42b3d;--accent2:#1486d4;--dark:#a91d2e;
@@ -156,7 +156,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <section id="memberScreen">
   <header class="hero">
     <div class="title">🛒 かいものナビ</div>
-    <div class="version">Ver.0.23</div>
+    <div class="version">Ver.0.24</div>
     <div class="purpose">つかう人を えらんでください。<br>ひとりひとり、よく買うものや画面を変えられます。</div>
   </header>
 
@@ -173,7 +173,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <section id="staffScreen" class="hidden">
   <header class="hero">
     <div class="title">⚙️ 設定（職員）</div>
-    <div class="version">Ver.0.23</div>
+    <div class="version">Ver.0.24</div>
   </header>
   <section class="panel">
     <div class="big">その人用に作る</div>
@@ -216,7 +216,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
   <header class="hero">
     <div id="mainTitle" class="title">🛒 わたしのかいもの</div>
     <div class="sub">かいものナビ</div>
-    <div class="version">Ver.0.23</div>
+    <div class="version">Ver.0.24</div>
     <div class="purpose">🛒 おみせで つかおう！<br>カゴに商品を入れたら、ここでも同じ商品をタップ。</div>
   </header>
 
@@ -296,12 +296,12 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 
 
 <footer id="appInfo" class="app-info">
-  <div class="build">モトスト かいものナビ　Ver.0.23｜2026.09.04a</div>
+  <div class="build">モトスト かいものナビ　Ver.0.24｜2026.09.04b</div>
   <button id="forceUpdateBtn" class="update-btn">🔄 最新版に更新する</button>
   <details>
     <summary>このアプリについて</summary>
     <p>買い物中に商品をカゴへ入れるたび、合計金額と残りのお金を確認する買い物支援ツールです。商品や画面は、一人ひとりに合わせて職員が設定できます。</p>
-    <p>設定した商品やメンバー情報は、このスマホ／ブラウザ内に保存されます。</p>
+    <p>設定した商品やメンバー情報は、このスマホ／ブラウザ内に保存されます。職員が設定すると、同じスマホの利用者画面へ反映されます。別のスマホには同期されません。</p>
   </details>
 </footer>
 
@@ -322,8 +322,9 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
-const KEY="kainavi_v022";
-const OLD_KEYS=["kainavi_v021","kainavi_v020","kainavi_v019","kainavi_v018","kainavi_v017","kainavi_v016"];
+const KEY="kainavi_data";
+const SCHEMA_VERSION=1;
+const OLD_KEYS=["kainavi_v022","kainavi_v021","kainavi_v020","kainavi_v019","kainavi_v018","kainavi_v017","kainavi_v016"];
 
 const themes={
   game:["#e42b3d","#1486d4","#a91d2e","#ef3448","#1582cf"],
@@ -381,35 +382,78 @@ $("appModalCancel").onclick=()=>{if(modalResolve)modalResolve(false)};
 
 function uid(){return "m_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,7)}
 function clone(x){return JSON.parse(JSON.stringify(x))}
-function saveStore(){localStorage.setItem(KEY,JSON.stringify(store))}
-function loadStore(){
+function cleanName(value){return String(value||"").trim().replace(/\s+/g," ")}
+function cleanProducts(products=[]){
+  const unique=new Map();
+  products.forEach(p=>{
+    const name=cleanName(p?.name),price=Math.round(Number(p?.price ?? p?.prices?.[0]));
+    if(!name||!Number.isFinite(price)||price<1)return;
+    const direct=Boolean(p?.direct);
+    const rawRate=Number(p?.rate ?? 8),rate=Number.isFinite(rawRate)?Math.max(0,rawRate):8;
+    unique.set(name.toLocaleLowerCase("ja"),{
+      name,emoji:p?.emoji||emoji(name),price,rate:direct?0:rate,direct
+    });
+  });
+  return [...unique.values()];
+}
+function normalizeStore(value){
+  const members=Array.isArray(value?.members)?value.members.map(m=>({
+    id:m?.id||uid(),
+    memberName:cleanName(m?.memberName)||"これまでの設定",
+    title:cleanName(m?.title)||"わたしのかいもの",
+    theme:themes[m?.theme]?m.theme:"simple",
+    defaultBalance:Math.max(1,Math.round(Number(m?.defaultBalance)||2500)),
+    products:cleanProducts(m?.products)
+  })).filter(m=>m.products.length):[];
+  return {
+    schemaVersion:SCHEMA_VERSION,
+    updatedAt:Number(value?.updatedAt)||0,
+    members,
+    activeMemberId:members.some(m=>m.id===value?.activeMemberId)?value.activeMemberId:null
+  };
+}
+function readStore(key){
   try{
-    const raw=localStorage.getItem(KEY);
-    if(raw)return JSON.parse(raw);
-
-    for(const oldKey of OLD_KEYS){
-      const old=localStorage.getItem(oldKey);
-      if(old){
-        const p=JSON.parse(old);
-        const migrated={
-          id:uid(),
-          memberName:"これまでの設定",
-          title:p.title||"わたしのかいもの",
-          theme:p.theme||"simple",
-          defaultBalance:p.defaultBalance||2500,
-          products:(p.products||[]).map(x=>({
-            name:x.name,emoji:x.emoji||emoji(x.name),
-            price:Number(x.price ?? x.prices?.[0] ?? 100),
-            rate:Number(x.rate||8)
-          }))
-        };
-        const s={members:[migrated],activeMemberId:migrated.id};
-        localStorage.setItem(KEY,JSON.stringify(s));
-        return s;
-      }
+    const raw=localStorage.getItem(key);
+    return raw?JSON.parse(raw):null;
+  }catch(e){return null}
+}
+function saveStore(){
+  try{
+    const next=normalizeStore({...store,updatedAt:Date.now()});
+    const raw=JSON.stringify(next);
+    localStorage.setItem(KEY,raw);
+    if(localStorage.getItem(KEY)!==raw)throw new Error("保存確認に失敗");
+    store=next;return true;
+  }catch(e){
+    showNotice("この端末に保存できませんでした。ブラウザのプライベートモードや保存設定を確認してください。","保存できませんでした","⚠️");
+    return false;
+  }
+}
+function migrateLegacy(value){
+  if(Array.isArray(value?.members))return normalizeStore(value);
+  const migrated={
+    id:uid(),memberName:"これまでの設定",
+    title:value?.title||"わたしのかいもの",theme:value?.theme||"simple",
+    defaultBalance:value?.defaultBalance||2500,products:cleanProducts(value?.products)
+  };
+  return normalizeStore({members:migrated.products.length?[migrated]:[],activeMemberId:migrated.id});
+}
+function loadStore(){
+  const saved=readStore(KEY);
+  if(saved)return normalizeStore(saved);
+  for(const oldKey of OLD_KEYS){
+    const old=readStore(oldKey);
+    if(old){
+      const migrated=migrateLegacy(old);
+      try{
+        const next={...migrated,updatedAt:Date.now()};
+        localStorage.setItem(KEY,JSON.stringify(next));
+        return normalizeStore(next);
+      }catch(e){return migrated}
     }
-  }catch(e){}
-  return {members:[],activeMemberId:null};
+  }
+  return normalizeStore({members:[],activeMemberId:null});
 }
 
 function showScreen(id){
@@ -441,8 +485,8 @@ function renderMembers(){
   }
   store.members.forEach(m=>{
     const card=document.createElement("div");card.className="member-card";
-    card.innerHTML=`<div class="member-title">${m.memberName||m.title}</div>
-      <div class="member-meta">${m.title} ・ 商品 ${m.products.length}こ</div>
+    card.innerHTML=`<div class="member-title">${escapeHtml(m.memberName||m.title)}</div>
+      <div class="member-meta">${escapeHtml(m.title)} ・ 商品 ${m.products.length}こ</div>
       <div class="member-actions">
         <button class="primary" style="margin:0;min-height:50px">🛒 つかう</button>
         <button class="small">⚙️ 編集</button>
@@ -456,7 +500,9 @@ function renderMembers(){
 
 function activateMember(id){
   const m=store.members.find(x=>x.id===id);if(!m)return;
-  store.activeMemberId=id;saveStore();current=m;applyCurrent();showScreen("mainScreen");
+  store.activeMemberId=id;
+  if(!saveStore())return;
+  current=store.members.find(x=>x.id===id);applyCurrent();showScreen("mainScreen");
 }
 
 function applyCurrent(){
@@ -529,9 +575,12 @@ document.querySelectorAll(".theme").forEach(b=>b.onclick=()=>{
 });
 
 $("addProductBtn").onclick=()=>{
-  const n=$("newName").value.trim(),p=Math.round(+$("newPrice").value);
+  const n=cleanName($("newName").value),p=Math.round(+$("newPrice").value);
   if(!n||!p){showNotice("商品名と値段を入れてください","入力をかくにん","✏️");return;}
-  editingProducts.push({name:n,emoji:emoji(n),price:p,rate:8});
+  const existing=editingProducts.find(x=>cleanName(x.name).toLocaleLowerCase("ja")===n.toLocaleLowerCase("ja"));
+  if(existing){
+    existing.name=n;existing.emoji=emoji(n);existing.price=p;existing.rate=8;existing.direct=false;
+  }else editingProducts.push({name:n,emoji:emoji(n),price:p,rate:8,direct:false});
   $("newName").value="";$("newPrice").value="";renderEditor();
 };
 
@@ -544,14 +593,14 @@ $("saveMemberBtn").onclick=async()=>{
     title:$("appTitle").value.trim()||"わたしのかいもの",
     theme:selectedTheme,
     defaultBalance:Math.max(1,Math.round(+$("defaultBalance").value||2500)),
-    products:clone(editingProducts.filter(p=>p.name&&p.price>0))
+    products:cleanProducts(editingProducts)
   };
   if(!member.products.length){showNotice("商品を1つ以上登録してください","入力をかくにん","🛒");return;}
 
   const idx=store.members.findIndex(x=>x.id===member.id);
   if(idx>=0)store.members[idx]=clone(member);else store.members.push(clone(member));
   store.activeMemberId=member.id;
-  saveStore();
+  if(!saveStore())return;
 
   // 保存できた内容をlocalStorageから読み直して、画面表示と保存内容を必ず一致させる。
   store=loadStore();
@@ -566,20 +615,23 @@ $("deleteMemberBtn").onclick=async()=>{
   if(!ok)return;
   store.members=store.members.filter(x=>x.id!==editingId);
   if(store.activeMemberId===editingId)store.activeMemberId=null;
-  saveStore();renderMembers();showScreen("memberScreen");
+  if(!saveStore())return;
+  current=null;renderMembers();showScreen("memberScreen");
 };
 
 $("cancelStaffBtn").onclick=()=>{renderMembers();showScreen("memberScreen")};
 $("addMemberBtn").onclick=()=>openStaff(null);
 $("motostoPresetBtn").onclick=()=>{
   const m={id:uid(),memberName:"サンロー",title:"おためしかいもの",theme:"simple",defaultBalance:2000,products:clone(motostoProducts)};
-  store.members.push(m);saveStore();renderMembers();
+  store.members.push(m);if(saveStore())renderMembers();
 };
 
 $("homeBtn").onclick=()=>{renderMembers();showScreen("memberScreen")};
 $("staffBtn").onclick=()=>{if(current)openStaff(current.id)};
 
 function renderProducts(){
+  const latest=store.members.find(x=>x.id===current?.id);
+  if(latest)current=latest;
   const box=$("products");box.innerHTML="";
   current.products.forEach((p,i)=>{
     const b=document.createElement("button");b.className="product";
@@ -654,7 +706,7 @@ $("addCartBtn").onclick=()=>{
   if(!selectedProduct||!price){showNotice("値段を入れてください","入力をかくにん","💴");return;}
 
   const isOther=selectedProduct.direct&&!selectedProduct.name;
-  const name=isOther?$("itemName").value.trim():selectedProduct.name;
+  const name=isOther?cleanName($("itemName").value):selectedProduct.name;
   if(isOther&&!name){showNotice("しょうひんの なまえを 入れてください","入力をかくにん","✏️");return;}
 
   const before=pct();
@@ -673,12 +725,17 @@ $("addCartBtn").onclick=()=>{
   }
 
   if(isOther&&$("rememberItem").checked){
-    const existing=current.products.find(x=>x.name===name);
-    if(existing){existing.price=price;existing.emoji=emoji(name)}
-    else current.products.push({name,emoji:emoji(name),price,rate:8});
+    const lookup=name.toLocaleLowerCase("ja");
+    const existing=current.products.find(x=>cleanName(x.name).toLocaleLowerCase("ja")===lookup);
+    if(existing){
+      existing.name=name;existing.price=price;existing.emoji=emoji(name);existing.rate=0;existing.direct=true;
+    }else current.products.push({name,emoji:emoji(name),price,rate:0,direct:true});
     const idx=store.members.findIndex(x=>x.id===current.id);
     if(idx>=0)store.members[idx]=clone(current);
-    saveStore();renderProducts();
+    if(!saveStore()){
+      cart.pop();return;
+    }
+    current=store.members.find(x=>x.id===current.id);renderProducts();
   }
 
   sound(before<50&&after>=50?"50":before<65&&after>=65?"65":after>=80?"80":after>=65?"65":"normal");
@@ -730,6 +787,25 @@ $("forceUpdateBtn").onclick=()=>{
   u.searchParams.set("v",Date.now().toString());
   window.location.replace(u.toString());
 };
+
+function refreshFromStorage(){
+  const activeId=current?.id||store.activeMemberId;
+  store=loadStore();renderMembers();
+  if(activeId){
+    const latest=store.members.find(x=>x.id===activeId);
+    if(latest){
+      current=latest;applyTheme(current.theme);
+      const icon=current.theme==="race"?"🏎️ ":current.theme==="colorful"?"🌈 ":current.theme==="simple"?"🛒 ":"⚡ ";
+      $("mainTitle").textContent=icon+current.title;
+      $("memberLabel").textContent="👤 "+current.memberName;
+      renderProducts();
+    }
+  }
+}
+window.addEventListener("storage",event=>{
+  if(event.key===KEY||OLD_KEYS.includes(event.key))refreshFromStorage();
+});
+window.addEventListener("pageshow",event=>{if(event.persisted)refreshFromStorage()});
 
 store=loadStore();
 renderMembers();
