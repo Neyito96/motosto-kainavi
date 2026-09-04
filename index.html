@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#e42b3d">
-<title>かいものナビ Ver.0.19</title>
+<title>かいものナビ Ver.0.20</title>
 <style>
 :root{
   --accent:#e42b3d;--accent2:#1486d4;--dark:#a91d2e;
@@ -126,7 +126,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <section id="memberScreen">
   <header class="hero">
     <div class="title">🛒 かいものナビ</div>
-    <div class="version">Ver.0.19</div>
+    <div class="version">Ver.0.20</div>
     <div class="purpose">つかう人を えらんでください。<br>ひとりひとり、よく買うものや画面を変えられます。</div>
   </header>
 
@@ -134,16 +134,16 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
     <div class="big">👤 だれが つかいますか？</div>
     <div id="memberList" class="member-list"></div>
     <button id="addMemberBtn" class="primary">＋ 新しいメンバーを作る</button>
-    <button id="motostoPresetBtn" class="secondary">⚡ モトストを追加する</button>
-    <div class="note">設定はこのスマホ／ブラウザの中に保存されます。同じURLでも端末ごとに内容を変えられます。</div>
+    <button id="motostoPresetBtn" class="secondary">🧪 サンロー（おためし）を追加</button>
+    <div class="note">設定はこのスマホ／ブラウザの中に保存されます。同じURLでも端末ごとに内容を変えられます。<br>※ サンローは架空のおためし用です。個人の買い物データは公開ページには入れていません。</div>
   </section>
 </section>
 
 <!-- 職員設定 -->
 <section id="staffScreen" class="hidden">
   <header class="hero">
-    <div class="title">⚙️ 職員用設定</div>
-    <div class="version">Ver.0.19</div>
+    <div class="title">⚙️ 設定（職員）</div>
+    <div class="version">Ver.0.20</div>
   </header>
   <section class="panel">
     <div class="big">その人用に作る</div>
@@ -185,7 +185,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
   <header class="hero">
     <div id="mainTitle" class="title">🛒 わたしのかいもの</div>
     <div class="sub">かいものナビ</div>
-    <div class="version">Ver.0.19</div>
+    <div class="version">Ver.0.20</div>
     <div class="purpose">🛒 おみせで つかおう！<br>カゴに商品を入れたら、ここでも同じ商品をタップ。</div>
   </header>
 
@@ -259,7 +259,7 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 
 <div id="bottomNav" class="bottom-nav hidden">
   <button id="homeBtn">🏠 メンバー選択</button>
-  <button id="staffBtn">⚙️ 職員用</button>
+  <button id="staffBtn">⚙️ 設定（職員）</button>
 </div>
 
 
@@ -280,8 +280,8 @@ label{display:block;font-weight:1000;margin:14px 0 6px}
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
-const KEY="kainavi_v019";
-const OLD_KEYS=["kainavi_v018","kainavi_v017","kainavi_v016"];
+const KEY="kainavi_v020";
+const OLD_KEYS=["kainavi_v019","kainavi_v018","kainavi_v017","kainavi_v016"];
 
 const themes={
   game:["#e42b3d","#1486d4","#a91d2e","#ef3448","#1582cf"],
@@ -291,12 +291,8 @@ const themes={
 };
 
 const motostoProducts=[
-["アクエリアスゼロ","💧",98,8],["ドンタコス","🌮",100,8],["ポテトチップス","🥔",98,8],
-["カップヌードル シーフード","🍜",288,8],["アーモンドチョコ","🍫",268,8],["柿の種チョコ","🍘🍫",298,8],
-["チップスター","🥔",128,8],["ピザポテト","🍕",148,8],["カップヌードル BIG","🍜",288,8],
-["カップヌードル チリトマト","🍜",288,8],["超大盛やきそば","🍝",238,8],["油そば","🍜",278,8],
-["かっぱえびせん","🦐",128,8],["まろやかチーズ","🧀",138,8],["キシリトールガム","🍬",498,8],
-["196 缶チューハイ","🥫",128,10]
+["お茶","🍵",120,8],["ジュース","🥤",150,8],["パン","🍞",140,8],
+["おにぎり","🍙",130,8],["おかし","🍪",160,8],["チョコ","🍫",180,8]
 ].map(x=>({name:x[0],emoji:x[1],price:x[2],rate:x[3]}));
 
 let store={members:[],activeMemberId:null};
@@ -351,7 +347,7 @@ function loadStore(){
         const p=JSON.parse(old);
         const migrated={
           id:uid(),
-          memberName:p.title==="モトスト"?"基治さん":"これまでの設定",
+          memberName:"これまでの設定",
           title:p.title||"わたしのかいもの",
           theme:p.theme||"simple",
           defaultBalance:p.defaultBalance||2500,
@@ -383,7 +379,7 @@ function applyTheme(name){
 }
 
 function emoji(name=""){
-  if(/水|アクエリアス|ジュース|コーラ|お茶|飲|コーヒー/.test(name))return"🥤";
+  if(/水|ジュース|コーラ|お茶|飲|コーヒー/.test(name))return"🥤";
   if(/パン/.test(name))return"🍞"; if(/チョコ/.test(name))return"🍫";
   if(/ポテト|チップ/.test(name))return"🥔"; if(/麺|ヌードル|そば|ラーメン/.test(name))return"🍜";
   if(/プリン/.test(name))return"🍮"; if(/ガム|あめ|飴/.test(name))return"🍬";
@@ -506,7 +502,7 @@ $("deleteMemberBtn").onclick=async()=>{
 $("cancelStaffBtn").onclick=()=>{renderMembers();showScreen("memberScreen")};
 $("addMemberBtn").onclick=()=>openStaff(null);
 $("motostoPresetBtn").onclick=()=>{
-  const m={id:uid(),memberName:"基治さん",title:"モトスト",theme:"game",defaultBalance:2500,products:clone(motostoProducts)};
+  const m={id:uid(),memberName:"サンロー",title:"おためしかいもの",theme:"simple",defaultBalance:2000,products:clone(motostoProducts)};
   store.members.push(m);saveStore();renderMembers();
 };
 
