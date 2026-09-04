@@ -1,0 +1,6260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
+
+<meta
+  name="apple-mobile-web-app-status-bar-style"
+  content="default"
+>
+
+<meta
+  name="theme-color"
+  content="#e42b3d"
+>
+
+<title>モトスト かいものナビ</title>
+
+
+<style>
+
+:root{
+
+  --red:#e42b3d;
+  --red-dark:#b71f31;
+
+  --blue:#1486d4;
+  --blue-dark:#07589b;
+
+  --yellow:#ffd84a;
+  --green:#38c978;
+
+  --cream:#fffaf0;
+  --white:#ffffff;
+
+  --ink:#17243a;
+
+  --shadow:
+    0 5px 0 rgba(49,25,44,.18),
+    0 9px 18px rgba(17,31,55,.12);
+
+}
+
+
+*{
+
+  box-sizing:border-box;
+
+  -webkit-tap-highlight-color:
+    transparent;
+
+}
+
+
+html,
+body{
+
+  margin:0;
+
+  min-height:100%;
+
+}
+
+
+body{
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Sans",
+    "Yu Gothic",
+    sans-serif;
+
+  background:
+
+    radial-gradient(
+      circle at 12% 3%,
+      rgba(255,255,255,.3),
+      transparent 17%
+    ),
+
+    linear-gradient(
+      145deg,
+      #ef3448 0%,
+      #cf2036 43%,
+      #1582cf 100%
+    );
+
+  color:
+    var(--ink);
+
+  -webkit-text-size-adjust:
+    100%;
+
+}
+
+
+button,
+input{
+
+  font:inherit;
+
+}
+
+
+button{
+
+  cursor:pointer;
+
+  touch-action:
+    manipulation;
+
+}
+
+
+.app{
+
+  width:100%;
+
+  max-width:640px;
+
+  margin:auto;
+
+  padding:
+
+    max(
+      12px,
+      env(safe-area-inset-top)
+    )
+
+    12px
+
+    calc(
+      60px
+      +
+      env(safe-area-inset-bottom)
+    );
+
+}
+
+
+/* ====================================
+   HEADER
+==================================== */
+
+.hero{
+
+  position:relative;
+
+  overflow:hidden;
+
+  text-align:center;
+
+  color:white;
+
+  padding:
+    17px
+    12px
+    20px;
+
+  margin-bottom:
+    12px;
+
+  border-radius:
+    27px;
+
+  border:
+    3px solid white;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      #ef3a4b 0%,
+      #c81f36 52%,
+      #147fca 100%
+    );
+
+  box-shadow:
+    var(--shadow);
+
+}
+
+
+.quest{
+
+  color:
+    var(--yellow);
+
+  font-size:
+    12px;
+
+  letter-spacing:
+    4px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.title-main{
+
+  margin-top:
+    4px;
+
+  font-size:
+    35px;
+
+  line-height:
+    1;
+
+  font-weight:
+    1000;
+
+  text-shadow:
+
+    0 3px 0
+
+    rgba(
+      70,
+      8,
+      18,
+      .3
+    );
+
+}
+
+
+.title-sub{
+
+  margin-top:
+    6px;
+
+  font-size:
+    29px;
+
+  font-weight:
+    1000;
+
+  text-shadow:
+
+    0 3px 0
+
+    rgba(
+      70,
+      8,
+      18,
+      .3
+    );
+
+}
+
+
+.version{
+
+  display:
+    inline-block;
+
+  margin-top:
+    8px;
+
+  padding:
+    4px
+    12px;
+
+  border-radius:
+    99px;
+
+  background:
+    white;
+
+  color:
+    var(--red);
+
+  font-size:
+    11px;
+
+  font-weight:
+    1000;
+
+}
+
+
+/* ====================================
+   INTRO
+==================================== */
+
+.purpose{
+
+  margin-top:
+    13px;
+
+  padding:
+    14px;
+
+  border-radius:
+    17px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .96
+    );
+
+  color:
+    var(--blue-dark);
+
+}
+
+
+.purpose-title{
+
+  font-size:
+    20px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.purpose-text{
+
+  margin-top:
+    7px;
+
+  text-align:
+    left;
+
+  font-size:
+    15px;
+
+  line-height:
+    1.65;
+
+  font-weight:
+    800;
+
+}
+
+
+.purpose-strong{
+
+  margin-top:
+    7px;
+
+  color:
+    var(--red);
+
+  font-size:
+    18px;
+
+  font-weight:
+    1000;
+
+}
+
+
+/* ====================================
+   PANELS
+==================================== */
+
+.panel{
+
+  background:
+    var(--cream);
+
+  border:
+    3px solid white;
+
+  border-radius:
+    23px;
+
+  padding:
+    15px;
+
+  margin-bottom:
+    13px;
+
+  box-shadow:
+    var(--shadow);
+
+}
+
+
+/* ====================================
+   START
+==================================== */
+
+.start-title{
+
+  text-align:
+    center;
+
+  color:
+    var(--blue-dark);
+
+  font-size:
+    26px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.start-help{
+
+  text-align:
+    center;
+
+  margin-top:
+    7px;
+
+  color:
+    #655d58;
+
+  font-size:
+    16px;
+
+  line-height:
+    1.6;
+
+  font-weight:
+    800;
+
+}
+
+
+.balance-input{
+
+  width:
+    100%;
+
+  height:
+    86px;
+
+  margin-top:
+    17px;
+
+  border:
+    4px solid
+    var(--blue);
+
+  border-radius:
+    20px;
+
+  background:
+    white;
+
+  color:
+    var(--blue-dark);
+
+  text-align:
+    center;
+
+  font-size:
+    43px;
+
+  font-weight:
+    1000;
+
+  outline:
+    none;
+
+}
+
+
+.yen-label{
+
+  text-align:
+    center;
+
+  margin-top:
+    4px;
+
+  font-size:
+    20px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.start-button{
+
+  width:
+    100%;
+
+  min-height:
+    78px;
+
+  margin-top:
+    18px;
+
+  border:
+    3px solid white;
+
+  border-radius:
+    21px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #2097e7,
+      #0764b3
+    );
+
+  color:
+    white;
+
+  box-shadow:
+
+    0 6px 0
+
+    #064883;
+
+  font-size:
+    22px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.start-button:active{
+
+  transform:
+    translateY(
+      4px
+    );
+
+  box-shadow:
+
+    0 2px 0
+
+    #064883;
+
+}
+
+
+/* SOUND */
+
+.sound-row{
+
+  display:
+    flex;
+
+  gap:
+    8px;
+
+  margin-top:
+    13px;
+
+}
+
+
+.sound-button{
+
+  flex:
+    1;
+
+  min-height:
+    50px;
+
+  border:
+    2px solid
+    #cbd9e6;
+
+  border-radius:
+    14px;
+
+  background:
+    white;
+
+  color:
+    var(--blue-dark);
+
+  font-size:
+    14px;
+
+  font-weight:
+    900;
+
+}
+
+
+/* ====================================
+   SHOP
+==================================== */
+
+#shopScreen{
+
+  display:
+    none;
+
+}
+
+
+/* ====================================
+   DASHBOARD
+==================================== */
+
+.dashboard{
+
+  color:
+    white;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      #1689d8,
+      #075b9f 60%,
+      #173d79
+    );
+
+  border-color:
+    #bfeaff;
+
+}
+
+
+.start-balance{
+
+  font-size:
+    14px;
+
+  color:
+    #d6efff;
+
+  font-weight:
+    900;
+
+}
+
+
+.start-balance strong{
+
+  color:
+    white;
+
+  font-size:
+    18px;
+
+}
+
+
+.remain-label{
+
+  margin-top:
+    10px;
+
+  color:
+    #d6efff;
+
+  font-size:
+    14px;
+
+  font-weight:
+    900;
+
+}
+
+
+.remain-money{
+
+  font-size:
+    53px;
+
+  line-height:
+    1.05;
+
+  font-weight:
+    1000;
+
+  letter-spacing:
+    -2px;
+
+}
+
+
+.remain-money small{
+
+  font-size:
+    22px;
+
+}
+
+
+/* ====================================
+   METER
+==================================== */
+
+.meter-header{
+
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  margin-top:
+    15px;
+
+  color:
+    #d6efff;
+
+  font-size:
+    12px;
+
+  font-weight:
+    900;
+
+}
+
+
+.meter-outer{
+
+  position:
+    relative;
+
+  margin-top:
+    6px;
+
+  height:
+    35px;
+
+  padding:
+    4px;
+
+  border:
+    2px solid white;
+
+  border-radius:
+    99px;
+
+  background:
+    #043764;
+
+  overflow:
+    hidden;
+
+}
+
+
+.meter-used{
+
+  height:
+    100%;
+
+  width:
+    0%;
+
+  border-radius:
+    99px;
+
+  background:
+    #188ee5;
+
+  transition:
+
+    width .4s ease,
+    background .4s ease;
+
+}
+
+
+.target-marker,
+.over-marker,
+.alert-marker,
+.stop-marker{
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  bottom:
+    0;
+
+  z-index:
+    3;
+
+}
+
+
+.target-marker{
+
+  left:
+    50%;
+
+  width:
+    4px;
+
+  background:
+    white;
+
+}
+
+
+.over-marker{
+
+  left:
+    65%;
+
+  width:
+    3px;
+
+  background:
+    #ffe14f;
+
+}
+
+
+.alert-marker{
+
+  left:
+    80%;
+
+  width:
+    4px;
+
+  background:
+    #ff747d;
+
+}
+
+
+.stop-marker{
+
+  left:
+    90%;
+
+  width:
+    5px;
+
+  background:
+    white;
+
+  box-shadow:
+
+    0 0 7px
+
+    #ff2638;
+
+}
+
+
+.marker-labels{
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      1fr
+    );
+
+  gap:
+    4px;
+
+  margin-top:
+    7px;
+
+}
+
+
+.marker-box{
+
+  padding:
+    6px 1px;
+
+  border-radius:
+    9px;
+
+  text-align:
+    center;
+
+  font-size:
+    9px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.marker-target{
+
+  background:
+    #ddf7e8;
+
+  color:
+    #16884b;
+
+}
+
+
+.marker-over{
+
+  background:
+    #fff1b9;
+
+  color:
+    #987100;
+
+}
+
+
+.marker-alert{
+
+  background:
+    #ffd8dc;
+
+  color:
+    #af2230;
+
+}
+
+
+.marker-stop{
+
+  background:
+    #ffbdc5;
+
+  color:
+    #950016;
+
+}
+
+
+.status{
+
+  margin-top:
+    12px;
+
+  padding:
+    11px;
+
+  border-radius:
+    14px;
+
+  text-align:
+    center;
+
+  background:
+
+    rgba(
+      255,
+      255,
+      255,
+      .14
+    );
+
+  border:
+
+    1px solid
+
+    rgba(
+      255,
+      255,
+      255,
+      .27
+    );
+
+  font-size:
+    18px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.stats{
+
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  gap:
+    7px;
+
+  margin-top:
+    12px;
+
+}
+
+
+.stat{
+
+  padding:
+    8px 3px;
+
+  border-radius:
+    13px;
+
+  text-align:
+    center;
+
+  background:
+    white;
+
+  color:
+    var(--blue-dark);
+
+  border:
+    2px solid
+    #b8e4ff;
+
+}
+
+
+.stat-label{
+
+  font-size:
+    11px;
+
+  font-weight:
+    800;
+
+}
+
+
+.stat-value{
+
+  margin-top:
+    3px;
+
+  font-size:
+    19px;
+
+  font-weight:
+    1000;
+
+}
+
+
+/* ====================================
+   SECTION TITLES
+==================================== */
+
+.section-title{
+
+  margin:
+    23px
+    4px
+    4px;
+
+  color:
+    white;
+
+  font-size:
+    23px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.section-help{
+
+  margin:
+    0
+    4px
+    11px;
+
+  color:
+    #fff4f0;
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+
+}
+
+
+/* ====================================
+   PRODUCT CARDS
+==================================== */
+
+.products{
+
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:
+    10px;
+
+}
+
+
+.product{
+
+  position:
+    relative;
+
+  min-height:
+    141px;
+
+  padding:
+    12px;
+
+  text-align:
+    left;
+
+  border:
+    3px solid white;
+
+  border-radius:
+    21px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #fff,
+      #eef8ff
+    );
+
+  color:
+    var(--blue-dark);
+
+  box-shadow:
+
+    0 5px 0
+
+    #981f32;
+
+}
+
+
+.product.favorite{
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #fff8c6,
+      #ffdc4c
+    );
+
+}
+
+
+.product:active{
+
+  transform:
+    translateY(
+      4px
+    );
+
+  box-shadow:
+
+    0 1px 0
+
+    #981f32;
+
+}
+
+
+.product-emoji{
+
+  display:
+    block;
+
+  min-height:
+    48px;
+
+  font-size:
+    38px;
+
+}
+
+
+.product-name{
+
+  display:
+    block;
+
+  min-height:
+    38px;
+
+  margin-top:
+    4px;
+
+  font-size:
+    16px;
+
+  line-height:
+    1.18;
+
+  font-weight:
+    1000;
+
+}
+
+
+.product-price{
+
+  display:
+    inline-block;
+
+  margin-top:
+    7px;
+
+  padding:
+    4px 8px;
+
+  border-radius:
+    10px;
+
+  background:
+    var(--red);
+
+  color:
+    white;
+
+  font-size:
+    17px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.favorite-star{
+
+  position:
+    absolute;
+
+  top:
+    7px;
+
+  right:
+    8px;
+
+  color:
+    #ff9d00;
+
+  font-size:
+    22px;
+
+}
+
+
+/* ====================================
+   AQUARIUS BOTTLE
+==================================== */
+
+.bottle-wrap{
+
+  display:
+    block;
+
+  height:
+    50px;
+
+  padding-left:
+    8px;
+
+}
+
+
+.bottle-icon{
+
+  position:
+    relative;
+
+  display:
+    block;
+
+  width:
+    26px;
+
+  height:
+    46px;
+
+  margin-top:
+    4px;
+
+  border:
+    3px solid
+    #1688d1;
+
+  border-radius:
+    7px
+    7px
+    10px
+    10px;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      #dff7ff,
+      white 48%,
+      #c2eeff
+    );
+
+}
+
+
+.bottle-icon:before{
+
+  content:"";
+
+  position:
+    absolute;
+
+  width:
+    14px;
+
+  height:
+    8px;
+
+  left:
+    3px;
+
+  top:
+    -10px;
+
+  background:
+    #1487cf;
+
+  border:
+    2px solid
+    white;
+
+  border-radius:
+    3px;
+
+}
+
+
+.bottle-icon:after{
+
+  content:"A";
+
+  position:
+    absolute;
+
+  left:
+    3px;
+
+  right:
+    3px;
+
+  top:
+    14px;
+
+  padding:
+    3px 0;
+
+  border-radius:
+    4px;
+
+  background:
+    #148bd4;
+
+  color:
+    white;
+
+  text-align:
+    center;
+
+  font-size:
+    13px;
+
+  font-weight:
+    1000;
+
+}
+
+
+/* ====================================
+   PRICE PANEL
+==================================== */
+
+.price-panel{
+
+  display:
+    none;
+
+  background:
+    #fffce9;
+
+  border-color:
+    var(--yellow);
+
+}
+
+
+.price-panel.open{
+
+  display:
+    block;
+
+}
+
+
+.price-tag{
+
+  display:
+    inline-block;
+
+  padding:
+    4px 9px;
+
+  border-radius:
+    9px;
+
+  background:
+    var(--red);
+
+  color:
+    white;
+
+  font-size:
+    12px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.selected-name{
+
+  margin-top:
+    8px;
+
+  color:
+    var(--blue-dark);
+
+  font-size:
+    23px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.price-help{
+
+  margin-top:
+    7px;
+
+  color:
+    #62594e;
+
+  font-weight:
+    800;
+
+  line-height:
+    1.5;
+
+}
+
+
+.quick-prices{
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+
+  gap:
+    8px;
+
+  margin-top:
+    13px;
+
+}
+
+
+.quick-price{
+
+  min-height:
+    62px;
+
+  border:
+    3px solid white;
+
+  border-radius:
+    15px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #2595e3,
+      #0961ac
+    );
+
+  color:
+    white;
+
+  box-shadow:
+
+    0 4px 0
+
+    #07467d;
+
+  font-size:
+    22px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.quick-price.selected{
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #ffe24e,
+      #ffad1f
+    );
+
+  color:
+    #592e00;
+
+}
+
+
+.manual-price{
+
+  width:
+    100%;
+
+  height:
+    67px;
+
+  margin-top:
+    12px;
+
+  border:
+    3px solid
+    var(--blue);
+
+  border-radius:
+    15px;
+
+  background:
+    white;
+
+  color:
+    var(--blue-dark);
+
+  text-align:
+    center;
+
+  font-size:
+    30px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.add-button{
+
+  width:
+    100%;
+
+  min-height:
+    68px;
+
+  margin-top:
+    11px;
+
+  border:
+    3px solid white;
+
+  border-radius:
+    17px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #ef4052,
+      #c81f35
+    );
+
+  color:
+    white;
+
+  box-shadow:
+
+    0 5px 0
+
+    #911326;
+
+  font-size:
+    21px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.cancel-button{
+
+  width:
+    100%;
+
+  min-height:
+    48px;
+
+  margin-top:
+    7px;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    #756c64;
+
+  font-weight:
+    800;
+
+}
+
+
+.other-button{
+
+  width:
+    100%;
+
+  min-height:
+    72px;
+
+  border:
+    3px dashed
+    white;
+
+  border-radius:
+    20px;
+
+  background:
+    var(--blue);
+
+  color:
+    white;
+
+  box-shadow:
+    var(--shadow);
+
+  font-size:
+    19px;
+
+  font-weight:
+    1000;
+
+}
+
+
+/* ====================================
+   CART
+==================================== */
+
+.cart-panel{
+
+  background:
+    white;
+
+}
+
+
+.empty{
+
+  padding:
+    22px 4px;
+
+  text-align:
+    center;
+
+  color:
+    #7c7780;
+
+  font-weight:
+    800;
+
+}
+
+
+.cart-item{
+
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr auto;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+
+  padding:
+    11px 6px;
+
+  border-bottom:
+    2px dashed
+    #dae4ed;
+
+}
+
+
+.cart-name{
+
+  color:
+    var(--blue-dark);
+
+  font-size:
+    16px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.cart-info{
+
+  margin-top:
+    3px;
+
+  color:
+    #726f74;
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+}
+
+
+.cart-right{
+
+  text-align:
+    right;
+
+}
+
+
+.cart-price{
+
+  color:
+    var(--red);
+
+  font-size:
+    18px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.delete-button{
+
+  min-width:
+    79px;
+
+  min-height:
+    43px;
+
+  margin-top:
+    5px;
+
+  border:
+    2px solid
+    #ffb3bb;
+
+  border-radius:
+    12px;
+
+  background:
+    #ffe3e6;
+
+  color:
+    #b51e30;
+
+  font-weight:
+    1000;
+
+}
+
+
+/* ====================================
+   CHECKOUT
+==================================== */
+
+.checkout{
+
+  width:
+    100%;
+
+  min-height:
+    82px;
+
+  margin-top:
+    14px;
+
+  border:
+    4px solid white;
+
+  border-radius:
+    22px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #2495e3,
+      #0b68b7 56%,
+      #065093
+    );
+
+  color:
+    white;
+
+  box-shadow:
+
+    0 6px 0
+
+    #043c70;
+
+  font-size:
+    25px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.actions{
+
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:
+    8px;
+
+  margin-top:
+    11px;
+
+}
+
+
+.action{
+
+  min-height:
+    52px;
+
+  border:
+    2px solid white;
+
+  border-radius:
+    14px;
+
+  background:
+    var(--red);
+
+  color:
+    white;
+
+  font-weight:
+    900;
+
+}
+
+
+/* ====================================
+   FINISH
+==================================== */
+
+#finishScreen{
+
+  display:
+    none;
+
+}
+
+
+.result-panel{
+
+  text-align:
+    center;
+
+  padding:
+    25px 15px;
+
+  background:
+
+    radial-gradient(
+      circle at center,
+      white,
+      #fff0a8
+    );
+
+}
+
+
+.result-stars{
+
+  color:
+    #ff9f00;
+
+  font-size:
+    33px;
+
+  letter-spacing:
+    9px;
+
+}
+
+
+.result-title{
+
+  margin-top:
+    7px;
+
+  color:
+    var(--blue);
+
+  font-size:
+    37px;
+
+  line-height:
+    1.1;
+
+  font-weight:
+    1000;
+
+  animation:
+    resultPop
+    .7s
+    ease-out;
+
+}
+
+
+@keyframes resultPop{
+
+  0%{
+
+    transform:
+      scale(.5);
+
+    opacity:
+      0;
+
+  }
+
+  50%{
+
+    transform:
+      scale(1.15);
+
+  }
+
+  100%{
+
+    transform:
+      scale(1);
+
+    opacity:
+      1;
+
+  }
+
+}
+
+
+.result-sub{
+
+  margin-top:
+    8px;
+
+  color:
+    #5d5247;
+
+  font-size:
+    20px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.finish-label{
+
+  margin-top:
+    21px;
+
+  color:
+    #756c61;
+
+  font-weight:
+    800;
+
+}
+
+
+.finish-total{
+
+  color:
+    var(--red);
+
+  font-size:
+    48px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.finish-remain{
+
+  color:
+    var(--blue);
+
+  font-size:
+    29px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.result-badge{
+
+  display:
+    inline-block;
+
+  margin-top:
+    18px;
+
+  padding:
+    9px 15px;
+
+  border-radius:
+    99px;
+
+  font-size:
+    17px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.back-button{
+
+  width:
+    100%;
+
+  min-height:
+    61px;
+
+  margin-top:
+    18px;
+
+  border:
+    3px solid white;
+
+  border-radius:
+    17px;
+
+  background:
+    var(--blue);
+
+  color:
+    white;
+
+  font-size:
+    17px;
+
+  font-weight:
+    1000;
+
+}
+
+
+/* ====================================
+   GET POPUP
+==================================== */
+
+.get-popup{
+
+  position:
+    fixed;
+
+  left:
+    50%;
+
+  top:
+    43%;
+
+  transform:
+
+    translate(
+      -50%,
+      -50%
+    )
+
+    scale(.5);
+
+  z-index:
+    100;
+
+  opacity:
+    0;
+
+  pointer-events:
+    none;
+
+  padding:
+    15px 25px;
+
+  border:
+    4px solid white;
+
+  border-radius:
+    21px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #ffe44c,
+      #ffab1e
+    );
+
+  color:
+    #5a2c00;
+
+  box-shadow:
+
+    0 9px 30px
+
+    rgba(
+      0,
+      0,
+      0,
+      .28
+    );
+
+  font-size:
+    28px;
+
+  font-weight:
+    1000;
+
+  transition:
+    .2s;
+
+}
+
+
+.get-popup.show{
+
+  opacity:
+    1;
+
+  transform:
+
+    translate(
+      -50%,
+      -50%
+    )
+
+    scale(1);
+
+}
+
+
+/* ====================================
+   STOP ALERT
+==================================== */
+
+.over-alert{
+
+  position:
+    fixed;
+
+  left:
+    50%;
+
+  top:
+    42%;
+
+  transform:
+
+    translate(
+      -50%,
+      -50%
+    )
+
+    scale(.7);
+
+  z-index:
+    200;
+
+  width:
+    min(
+      88%,
+      420px
+    );
+
+  padding:
+    22px 18px;
+
+  border:
+    5px solid white;
+
+  border-radius:
+    24px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #ff5968,
+      #d91f35
+    );
+
+  color:
+    white;
+
+  text-align:
+    center;
+
+  box-shadow:
+
+    0 10px 35px
+
+    rgba(
+      0,
+      0,
+      0,
+      .35
+    );
+
+  opacity:
+    0;
+
+  pointer-events:
+    none;
+
+}
+
+
+.over-alert.show{
+
+  opacity:
+    1;
+
+  animation:
+    alertShake
+    .65s
+    ease-out;
+
+}
+
+
+.over-alert-icon{
+
+  font-size:
+    54px;
+
+}
+
+
+.over-alert-title{
+
+  font-size:
+    31px;
+
+  font-weight:
+    1000;
+
+}
+
+
+.over-alert-sub{
+
+  margin-top:
+    7px;
+
+  font-size:
+    17px;
+
+  line-height:
+    1.5;
+
+  font-weight:
+    900;
+
+}
+
+
+@keyframes alertShake{
+
+  0%{
+
+    transform:
+
+      translate(
+        -50%,
+        -50%
+      )
+
+      scale(.6);
+
+  }
+
+
+  20%{
+
+    transform:
+
+      translate(
+        calc(-50% - 9px),
+        -50%
+      )
+
+      scale(1.12);
+
+  }
+
+
+  40%{
+
+    transform:
+
+      translate(
+        calc(-50% + 9px),
+        -50%
+      );
+
+  }
+
+
+  60%{
+
+    transform:
+
+      translate(
+        calc(-50% - 6px),
+        -50%
+      );
+
+  }
+
+
+  80%{
+
+    transform:
+
+      translate(
+        calc(-50% + 4px),
+        -50%
+      );
+
+  }
+
+
+  100%{
+
+    transform:
+
+      translate(
+        -50%,
+        -50%
+      );
+
+  }
+
+}
+
+
+@media(max-width:360px){
+
+  .title-main{
+    font-size:30px;
+  }
+
+  .title-sub{
+    font-size:25px;
+  }
+
+  .remain-money{
+    font-size:45px;
+  }
+
+  .product-name{
+    font-size:14px;
+  }
+
+  .quick-prices{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .marker-box{
+    font-size:8px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- ====================================
+     HEADER
+==================================== -->
+
+<header class="hero">
+
+  <div class="quest">
+    SHOPPING QUEST
+  </div>
+
+  <div class="title-main">
+    ⚡ モトスト
+  </div>
+
+  <div class="title-sub">
+    かいものナビ
+  </div>
+
+  <div class="version">
+    Ver.0.15
+  </div>
+
+
+  <div class="purpose">
+
+    <div class="purpose-title">
+      🛒 おみせで つかおう！
+    </div>
+
+    <div class="purpose-text">
+
+      カゴに商品を入れたら、<br>
+
+      ここでも同じ商品をタップ。
+
+    </div>
+
+    <div class="purpose-strong">
+
+      いくら使った？　
+      あといくら？
+
+    </div>
+
+  </div>
+
+</header>
+
+
+
+<!-- ====================================
+     START
+==================================== -->
+
+<section id="startScreen">
+
+  <section class="panel">
+
+    <div class="start-title">
+
+      💳 いまのカード残高
+
+    </div>
+
+
+    <div class="start-help">
+
+      カードに残っている金額を<br>
+
+      入れてください
+
+    </div>
+
+
+    <input
+      id="balanceInput"
+      class="balance-input"
+      type="number"
+      inputmode="numeric"
+      value="2500"
+      min="1"
+    >
+
+
+    <div class="yen-label">
+
+      円
+
+    </div>
+
+
+    <button
+      id="startButton"
+      class="start-button"
+      type="button"
+    >
+
+      🛒 かいものスタート！
+
+    </button>
+
+
+    <div class="sound-row">
+
+      <button
+        id="testSoundButton"
+        class="sound-button"
+        type="button"
+      >
+
+        🔊 音をためす
+
+      </button>
+
+
+      <button
+        id="soundToggleButton"
+        class="sound-button"
+        type="button"
+      >
+
+        🔊 音 ON
+
+      </button>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+
+<!-- ====================================
+     SHOP
+==================================== -->
+
+<section id="shopScreen">
+
+
+<section
+  id="dashboard"
+  class="panel dashboard"
+>
+
+
+  <div class="start-balance">
+
+    💳 予算　
+
+    <strong>
+
+      <span id="startBalanceText">
+        2,500
+      </span>
+
+      円
+
+    </strong>
+
+  </div>
+
+
+  <div class="remain-label">
+
+    ⭐ あと つかえる お金
+
+  </div>
+
+
+  <div class="remain-money">
+
+    <span id="remaining">
+      2,500
+    </span>
+
+    <small>
+      円
+    </small>
+
+  </div>
+
+
+
+  <div class="meter-header">
+
+    <span>
+      つかった割合
+    </span>
+
+    <span id="usedPercent">
+      0%
+    </span>
+
+  </div>
+
+
+
+  <div class="meter-outer">
+
+    <div
+      id="meterUsed"
+      class="meter-used"
+    ></div>
+
+
+    <div class="target-marker"></div>
+
+    <div class="over-marker"></div>
+
+    <div class="alert-marker"></div>
+
+    <div class="stop-marker"></div>
+
+  </div>
+
+
+
+  <div class="marker-labels">
+
+    <div
+      class="marker-box marker-target"
+    >
+
+      🎯 50%
+
+    </div>
+
+
+    <div
+      class="marker-box marker-over"
+    >
+
+      ⚠️ 65%
+
+    </div>
+
+
+    <div
+      class="marker-box marker-alert"
+    >
+
+      🚨 80%
+
+    </div>
+
+
+    <div
+      class="marker-box marker-stop"
+    >
+
+      ⛔ 90%
+
+    </div>
+
+  </div>
+
+
+
+  <div
+    id="status"
+    class="status"
+  >
+
+    🟢 商品をカゴに入れたらタップ
+
+  </div>
+
+
+
+  <div class="stats">
+
+    <div class="stat">
+
+      <div class="stat-label">
+        はらう
+      </div>
+
+      <div class="stat-value">
+
+        <span id="total">
+          0
+        </span>
+
+        円
+
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        商品
+      </div>
+
+      <div class="stat-value">
+
+        <span id="count">
+          0
+        </span>
+
+        こ
+
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        目標
+      </div>
+
+      <div class="stat-value">
+
+        <span id="targetMoney">
+          1,250
+        </span>
+
+        円
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</section>
+
+
+
+<!-- ====================================
+     PRODUCTS
+==================================== -->
+
+<h2 class="section-title">
+
+  🛒 カゴに入れた商品
+
+</h2>
+
+
+<p class="section-help">
+
+  同じ商品をタップしてください
+
+</p>
+
+
+<div
+  id="products"
+  class="products"
+></div>
+
+
+
+<!-- ====================================
+     PRICE
+==================================== -->
+
+<section
+  id="pricePanel"
+  class="panel price-panel"
+>
+
+
+  <div class="price-tag">
+
+    値札を確認
+
+  </div>
+
+
+  <div
+    id="selectedName"
+    class="selected-name"
+  ></div>
+
+
+  <div class="price-help">
+
+    棚の値札の
+
+    <strong>
+      大きい数字
+    </strong>
+
+    と同じ金額をえらぼう
+
+  </div>
+
+
+  <div
+    id="quickPrices"
+    class="quick-prices"
+  ></div>
+
+
+  <input
+    id="manualPrice"
+    class="manual-price"
+    type="number"
+    inputmode="numeric"
+    placeholder="ほかの値段"
+  >
+
+
+  <button
+    id="addButton"
+    class="add-button"
+    type="button"
+  >
+
+    🛒 カゴに追加
+
+  </button>
+
+
+  <button
+    id="cancelButton"
+    class="cancel-button"
+    type="button"
+  >
+
+    やめる
+
+  </button>
+
+
+</section>
+
+
+
+<!-- ====================================
+     OTHER
+==================================== -->
+
+<h2 class="section-title">
+
+  ❓ リストにない商品
+
+</h2>
+
+
+<button
+  id="otherButton"
+  class="other-button"
+  type="button"
+>
+
+  ＋ 値段を入力する
+
+</button>
+
+
+
+<!-- ====================================
+     CART
+==================================== -->
+
+<h2 class="section-title">
+
+  🧾 カゴの中
+
+</h2>
+
+
+<p class="section-help">
+
+  間違えた商品は「✕ けす」
+
+</p>
+
+
+<section class="panel cart-panel">
+
+  <div
+    id="empty"
+    class="empty"
+  >
+
+    まだ商品はありません
+
+  </div>
+
+  <div id="cart"></div>
+
+</section>
+
+
+
+<!-- ====================================
+     CHECKOUT
+==================================== -->
+
+<button
+  id="checkout"
+  class="checkout"
+  type="button"
+>
+
+  🏁 レジへ行く
+
+</button>
+
+
+<div class="actions">
+
+  <button
+    id="undo"
+    class="action"
+    type="button"
+  >
+
+    ↩ ひとつ戻す
+
+  </button>
+
+
+  <button
+    id="restart"
+    class="action"
+    type="button"
+  >
+
+    🔄 最初から
+
+  </button>
+
+</div>
+
+
+</section>
+
+
+
+<!-- ====================================
+     RESULT
+==================================== -->
+
+<section id="finishScreen">
+
+  <section class="panel result-panel">
+
+
+    <div class="result-stars">
+
+      ★★★
+
+    </div>
+
+
+    <div class="result-title">
+
+      🏁 レジに行こう！
+
+    </div>
+
+
+    <div
+      id="resultSub"
+      class="result-sub"
+    >
+
+      準備できた。
+
+    </div>
+
+
+    <div class="finish-label">
+
+      レジではらう金額
+
+    </div>
+
+
+    <div class="finish-total">
+
+      <span id="finishTotal">
+        0
+      </span>
+
+      円
+
+    </div>
+
+
+    <div class="finish-label">
+
+      買ったあとの残高
+
+    </div>
+
+
+    <div class="finish-remain">
+
+      あと
+
+      <span id="finishRemaining">
+        0
+      </span>
+
+      円
+
+    </div>
+
+
+    <div
+      id="resultBadge"
+      class="result-badge"
+    >
+
+      🎯 準備OK！
+
+    </div>
+
+
+    <button
+      id="backButton"
+      class="back-button"
+      type="button"
+    >
+
+      ← 商品えらびにもどる
+
+    </button>
+
+
+  </section>
+
+</section>
+
+
+
+<!-- ====================================
+     POPUPS
+==================================== -->
+
+<div
+  id="getPopup"
+  class="get-popup"
+>
+
+  🛒 カゴに追加！
+
+</div>
+
+
+
+<div
+  id="overAlert"
+  class="over-alert"
+>
+
+  <div class="over-alert-icon">
+
+    ⛔
+
+  </div>
+
+
+  <div class="over-alert-title">
+
+    ここまで！
+
+  </div>
+
+
+  <div class="over-alert-sub">
+
+    レジのために お金をのこそう<br>
+
+    この商品は入れません
+
+  </div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+(() => {
+
+
+const $ =
+  id =>
+  document.getElementById(
+    id
+  );
+
+
+/* ====================================
+   PRODUCTS
+==================================== */
+
+const PRODUCTS = [
+
+{
+  name:
+    "アクエリアスゼロ",
+
+  emoji:
+    "💧",
+
+  iconType:
+    "bottle",
+
+  prices:
+    [98,108],
+
+  rate:
+    8,
+
+  favorite:
+    true
+},
+
+
+{
+  name:
+    "ドンタコス",
+
+  emoji:
+    "🌮",
+
+  prices:
+    [100,118],
+
+  rate:
+    8,
+
+  favorite:
+    true
+},
+
+
+{
+  name:
+    "ポテトチップス",
+
+  emoji:
+    "🥔",
+
+  prices:
+    [98,108],
+
+  rate:
+    8,
+
+  favorite:
+    true
+},
+
+
+{
+  name:
+    "カップヌードル シーフード",
+
+  emoji:
+    "🍜",
+
+  prices:
+    [288],
+
+  rate:
+    8,
+
+  favorite:
+    true
+},
+
+
+{
+  name:
+    "アーモンドチョコ",
+
+  emoji:
+    "🍫",
+
+  prices:
+    [268],
+
+  rate:
+    8,
+
+  favorite:
+    true
+},
+
+
+{
+  name:
+    "柿の種チョコ",
+
+  emoji:
+    "🍘🍫",
+
+  prices:
+    [298],
+
+  rate:
+    8,
+
+  favorite:
+    true
+},
+
+
+{
+  name:
+    "チップスター",
+
+  emoji:
+    "🥔",
+
+  prices:
+    [128],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "ピザポテト",
+
+  emoji:
+    "🍕",
+
+  prices:
+    [148],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "カップヌードル BIG",
+
+  emoji:
+    "🍜",
+
+  prices:
+    [288],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "カップヌードル チリトマト",
+
+  emoji:
+    "🍜",
+
+  prices:
+    [288],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "超大盛やきそば",
+
+  emoji:
+    "🍝",
+
+  prices:
+    [238],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "油そば",
+
+  emoji:
+    "🍜",
+
+  prices:
+    [278],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "かっぱえびせん",
+
+  emoji:
+    "🦐",
+
+  prices:
+    [128],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "まろやかチーズ",
+
+  emoji:
+    "🧀",
+
+  prices:
+    [138],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "キシリトールガム",
+
+  emoji:
+    "🍬",
+
+  prices:
+    [498],
+
+  rate:
+    8
+},
+
+
+{
+  name:
+    "196 缶チューハイ",
+
+  emoji:
+    "🥫",
+
+  prices:
+    [128],
+
+  rate:
+    10
+}
+
+];
+
+
+
+/* ====================================
+   STATE
+==================================== */
+
+let startBalance =
+  2500;
+
+
+let cart =
+  [];
+
+
+let selectedProduct =
+  null;
+
+
+let soundEnabled =
+  true;
+
+
+let audioContext =
+  null;
+
+
+
+/* ====================================
+   AUDIO
+==================================== */
+
+function initAudio(){
+
+
+  const AudioCtx =
+
+    window.AudioContext
+
+    ||
+
+    window.webkitAudioContext;
+
+
+  if(
+    !AudioCtx
+  ){
+
+    return false;
+
+  }
+
+
+  if(
+    !audioContext
+  ){
+
+    audioContext =
+      new AudioCtx();
+
+  }
+
+
+  if(
+
+    audioContext.state
+
+    ===
+
+    "suspended"
+
+  ){
+
+    audioContext
+      .resume();
+
+  }
+
+
+  return true;
+
+}
+
+
+
+function tone(
+
+  frequency,
+
+  duration,
+
+  delay=0,
+
+  type="sine",
+
+  volume=.12
+
+){
+
+
+  if(
+
+    !soundEnabled
+
+    ||
+
+    !audioContext
+
+  ){
+
+    return;
+
+  }
+
+
+  const start =
+
+    audioContext
+      .currentTime
+
+    +
+
+    delay;
+
+
+  const osc =
+
+    audioContext
+      .createOscillator();
+
+
+  const gain =
+
+    audioContext
+      .createGain();
+
+
+  osc.type =
+    type;
+
+
+  osc.frequency
+    .setValueAtTime(
+
+      frequency,
+
+      start
+
+    );
+
+
+  gain.gain
+    .setValueAtTime(
+
+      .0001,
+
+      start
+
+    );
+
+
+  gain.gain
+    .exponentialRampToValueAtTime(
+
+      volume,
+
+      start+.01
+
+    );
+
+
+  gain.gain
+    .exponentialRampToValueAtTime(
+
+      .0001,
+
+      start+duration
+
+    );
+
+
+  osc.connect(
+    gain
+  );
+
+
+  gain.connect(
+    audioContext.destination
+  );
+
+
+  osc.start(
+    start
+  );
+
+
+  osc.stop(
+
+    start
+
+    +
+
+    duration
+
+    +
+
+    .03
+
+  );
+
+}
+
+
+
+/* ====================================
+   SOUNDS
+==================================== */
+
+
+/* TEST */
+
+function soundTest(){
+
+  initAudio();
+
+  tone(
+    880,
+    .10,
+    0,
+    "sine",
+    .14
+  );
+
+  tone(
+    1320,
+    .14,
+    .10,
+    "sine",
+    .12
+  );
+
+}
+
+
+
+/* NORMAL */
+
+function soundNormal(){
+
+  initAudio();
+
+  tone(
+    950,
+    .07,
+    0,
+    "sine",
+    .12
+  );
+
+  tone(
+    1300,
+    .10,
+    .06,
+    "sine",
+    .11
+  );
+
+  tone(
+    1700,
+    .10,
+    .13,
+    "sine",
+    .08
+  );
+
+}
+
+
+
+/* 50%
+   明るい達成音 */
+
+function sound50(){
+
+  initAudio();
+
+
+  tone(
+    660,
+    .08,
+    0,
+    "sine",
+    .11
+  );
+
+
+  tone(
+    880,
+    .09,
+    .08,
+    "sine",
+    .12
+  );
+
+
+  tone(
+    1100,
+    .10,
+    .16,
+    "sine",
+    .12
+  );
+
+
+  tone(
+    1500,
+    .18,
+    .25,
+    "sine",
+    .11
+  );
+
+}
+
+
+
+/* 65%
+   注意 */
+
+function sound65(){
+
+  initAudio();
+
+
+  tone(
+    720,
+    .10,
+    0,
+    "triangle",
+    .12
+  );
+
+
+  tone(
+    620,
+    .11,
+    .12,
+    "triangle",
+    .12
+  );
+
+
+  tone(
+    520,
+    .18,
+    .24,
+    "square",
+    .09
+  );
+
+}
+
+
+
+/* 65〜79%
+   同じ注意系 */
+
+function soundCaution(){
+
+  initAudio();
+
+
+  tone(
+    720,
+    .08,
+    0,
+    "triangle",
+    .11
+  );
+
+
+  tone(
+    620,
+    .10,
+    .11,
+    "triangle",
+    .11
+  );
+
+
+  tone(
+    520,
+    .14,
+    .22,
+    "square",
+    .08
+  );
+
+}
+
+
+
+/* 80%
+   上向き音はやめる。
+   低く「ブッ・ブッ」
+*/
+
+function sound80(){
+
+  initAudio();
+
+
+  tone(
+    520,
+    .10,
+    0,
+    "square",
+    .12
+  );
+
+
+  tone(
+    420,
+    .13,
+    .12,
+    "square",
+    .13
+  );
+
+
+  tone(
+    520,
+    .10,
+    .29,
+    "square",
+    .12
+  );
+
+
+  tone(
+    370,
+    .19,
+    .42,
+    "square",
+    .14
+  );
+
+}
+
+
+
+/* 80〜89%
+   毎回、低い警戒音
+*/
+
+function soundDanger(){
+
+  initAudio();
+
+
+  tone(
+    500,
+    .08,
+    0,
+    "square",
+    .11
+  );
+
+
+  tone(
+    410,
+    .09,
+    .11,
+    "square",
+    .12
+  );
+
+
+  tone(
+    500,
+    .08,
+    .23,
+    "square",
+    .11
+  );
+
+
+  tone(
+    380,
+    .14,
+    .35,
+    "square",
+    .13
+  );
+
+}
+
+
+
+/* 90%
+   STOP
+*/
+
+function soundStop(){
+
+  initAudio();
+
+
+  tone(
+    220,
+    .15,
+    0,
+    "square",
+    .15
+  );
+
+
+  tone(
+    160,
+    .20,
+    .16,
+    "square",
+    .16
+  );
+
+
+  tone(
+    220,
+    .15,
+    .39,
+    "square",
+    .15
+  );
+
+
+  tone(
+    140,
+    .32,
+    .55,
+    "square",
+    .17
+  );
+
+}
+
+
+
+/* CHECKOUT */
+
+function soundCheckout(){
+
+  initAudio();
+
+
+  /* ピッ */
+
+  tone(
+    1550,
+    .07,
+    0,
+    "square",
+    .08
+  );
+
+
+  /* カシャン */
+
+  tone(
+    500,
+    .08,
+    .17,
+    "triangle",
+    .11
+  );
+
+
+  tone(
+    780,
+    .09,
+    .23,
+    "triangle",
+    .10
+  );
+
+
+  tone(
+    1100,
+    .14,
+    .30,
+    "sine",
+    .09
+  );
+
+}
+
+
+
+/* ====================================
+   SOUND BUTTONS
+==================================== */
+
+$("testSoundButton")
+  .addEventListener(
+
+    "click",
+
+    soundTest
+
+  );
+
+
+
+$("soundToggleButton")
+  .addEventListener(
+
+    "click",
+
+    () => {
+
+
+      initAudio();
+
+
+      soundEnabled =
+        !soundEnabled;
+
+
+      $("soundToggleButton")
+        .textContent =
+
+        soundEnabled
+
+        ?
+
+        "🔊 音 ON"
+
+        :
+
+        "🔇 音 OFF";
+
+
+      if(
+        soundEnabled
+      ){
+
+        soundTest();
+
+      }
+
+    }
+
+  );
+
+
+
+/* ====================================
+   FORMAT
+==================================== */
+
+function yen(n){
+
+  return Math.round(n)
+    .toLocaleString(
+      "ja-JP"
+    );
+
+}
+
+
+
+/* ====================================
+   TOTAL
+==================================== */
+
+function calculateTotal(){
+
+
+  let subtotal8 =
+    0;
+
+
+  let subtotal10 =
+    0;
+
+
+  let direct =
+    0;
+
+
+  cart.forEach(
+    item => {
+
+
+      if(
+        item.direct
+      ){
+
+        direct +=
+          item.price;
+
+      }
+
+
+      else if(
+        item.rate === 8
+      ){
+
+        subtotal8 +=
+          item.price;
+
+      }
+
+
+      else{
+
+        subtotal10 +=
+          item.price;
+
+      }
+
+    }
+  );
+
+
+  return (
+
+    Math.floor(
+      subtotal8 * 1.08
+    )
+
+    +
+
+    Math.floor(
+      subtotal10 * 1.10
+    )
+
+    +
+
+    direct
+
+  );
+
+}
+
+
+
+function itemTaxPrice(
+  item
+){
+
+
+  if(
+    item.direct
+  ){
+
+    return item.price;
+
+  }
+
+
+  return Math.floor(
+
+    item.price
+
+    *
+
+    (
+      1
+      +
+      item.rate/100
+    )
+
+  );
+
+}
+
+
+
+function currentPercent(){
+
+
+  if(
+    startBalance <= 0
+  ){
+
+    return 0;
+
+  }
+
+
+  return (
+
+    calculateTotal()
+
+    /
+
+    startBalance
+
+    *
+
+    100
+
+  );
+
+}
+
+
+
+/* ====================================
+   METER COLOR
+
+   BLUE
+   ↓
+   GREEN 50
+   ↓
+   YELLOW 65
+   ↓
+   ORANGE 80
+   ↓
+   RED 90
+==================================== */
+
+function meterColor(
+  percent
+){
+
+
+  let hue;
+
+
+  percent =
+
+    Math.max(
+
+      0,
+
+      Math.min(
+
+        100,
+
+        percent
+
+      )
+
+    );
+
+
+  if(
+    percent <= 50
+  ){
+
+
+    hue =
+
+      210
+
+      -
+
+      (
+        percent
+        /
+        50
+      )
+
+      *
+
+      85;
+
+  }
+
+
+  else if(
+    percent <= 65
+  ){
+
+
+    hue =
+
+      125
+
+      -
+
+      (
+        (
+          percent
+          -
+          50
+        )
+
+        /
+
+        15
+      )
+
+      *
+
+      70;
+
+  }
+
+
+  else if(
+    percent <= 80
+  ){
+
+
+    hue =
+
+      55
+
+      -
+
+      (
+        (
+          percent
+          -
+          65
+        )
+
+        /
+
+        15
+      )
+
+      *
+
+      30;
+
+  }
+
+
+  else{
+
+
+    hue =
+
+      25
+
+      -
+
+      (
+        (
+          percent
+          -
+          80
+        )
+
+        /
+
+        20
+      )
+
+      *
+
+      25;
+
+  }
+
+
+  return(
+
+    `linear-gradient(
+      180deg,
+      hsl(${hue},90%,63%),
+      hsl(${hue},85%,45%)
+    )`
+
+  );
+
+}
+
+
+
+/* ====================================
+   PRODUCTS
+==================================== */
+
+function renderProducts(){
+
+
+  const area =
+    $("products");
+
+
+  area.innerHTML =
+    "";
+
+
+  PRODUCTS.forEach(
+
+    (
+      product,
+      index
+    ) => {
+
+
+      const button =
+
+        document
+          .createElement(
+            "button"
+          );
+
+
+      button.type =
+        "button";
+
+
+      button.className =
+
+        "product"
+
+        +
+
+        (
+          product.favorite
+
+          ?
+
+          " favorite"
+
+          :
+
+          ""
+        );
+
+
+      let priceText;
+
+
+      if(
+        product.prices.length
+        ===
+        1
+      ){
+
+
+        priceText =
+
+          product.prices[0]
+
+          +
+
+          "円";
+
+      }
+
+
+      else{
+
+
+        priceText =
+
+          Math.min(
+            ...product.prices
+          )
+
+          +
+
+          "〜"
+
+          +
+
+          Math.max(
+            ...product.prices
+          )
+
+          +
+
+          "円";
+
+      }
+
+
+
+      let iconHTML;
+
+
+      if(
+        product.iconType
+        ===
+        "bottle"
+      ){
+
+
+        iconHTML =
+
+          '<span class="bottle-wrap">'
+
+          +
+
+          '<span class="bottle-icon"></span>'
+
+          +
+
+          '</span>';
+
+      }
+
+
+      else{
+
+
+        iconHTML =
+
+          '<span class="product-emoji">'
+
+          +
+
+          product.emoji
+
+          +
+
+          '</span>';
+
+      }
+
+
+
+      button.innerHTML =
+
+
+        (
+          product.favorite
+
+          ?
+
+          '<span class="favorite-star">★</span>'
+
+          :
+
+          ""
+        )
+
+
+        +
+
+
+        iconHTML
+
+
+        +
+
+
+        '<span class="product-name">'
+
+        +
+
+        product.name
+
+        +
+
+        '</span>'
+
+
+        +
+
+
+        '<span class="product-price">'
+
+        +
+
+        priceText
+
+        +
+
+        '</span>';
+
+
+
+      button.addEventListener(
+
+        "click",
+
+        () =>
+
+          openProduct(
+            index
+          )
+
+      );
+
+
+      area.appendChild(
+        button
+      );
+
+    }
+
+  );
+
+}
+
+
+
+/* ====================================
+   OPEN PRODUCT
+==================================== */
+
+function openProduct(
+  index
+){
+
+
+  selectedProduct =
+    PRODUCTS[index];
+
+
+  $("selectedName")
+    .textContent =
+
+    selectedProduct.emoji
+
+    +
+
+    " "
+
+    +
+
+    selectedProduct.name;
+
+
+
+  const quick =
+    $("quickPrices");
+
+
+  quick.innerHTML =
+    "";
+
+
+
+  selectedProduct
+    .prices
+    .forEach(
+
+      (
+        price,
+        i
+      ) => {
+
+
+        const button =
+
+          document
+            .createElement(
+              "button"
+            );
+
+
+        button.type =
+          "button";
+
+
+        button.className =
+          "quick-price";
+
+
+        button.textContent =
+
+          price
+
+          +
+
+          "円";
+
+
+        if(
+          i === 0
+        ){
+
+          button
+            .classList
+            .add(
+              "selected"
+            );
+
+        }
+
+
+        button.addEventListener(
+
+          "click",
+
+          () => {
+
+
+            $("manualPrice")
+              .value =
+              price;
+
+
+            quick
+              .querySelectorAll(
+                ".quick-price"
+              )
+              .forEach(
+
+                b =>
+
+                  b
+                    .classList
+                    .remove(
+                      "selected"
+                    )
+
+              );
+
+
+            button
+              .classList
+              .add(
+                "selected"
+              );
+
+          }
+
+        );
+
+
+        quick.appendChild(
+          button
+        );
+
+      }
+
+    );
+
+
+
+  $("manualPrice")
+    .value =
+
+    selectedProduct
+      .prices[0];
+
+
+  $("manualPrice")
+    .placeholder =
+
+    "ほかの値段";
+
+
+  $("pricePanel")
+    .classList
+    .add(
+      "open"
+    );
+
+
+  $("pricePanel")
+    .scrollIntoView({
+
+      behavior:
+        "smooth",
+
+      block:
+        "center"
+
+    });
+
+}
+
+
+
+/* ====================================
+   OTHER
+==================================== */
+
+$("otherButton")
+  .addEventListener(
+
+    "click",
+
+    () => {
+
+
+      selectedProduct = {
+
+        name:
+          "そのほかの商品",
+
+        emoji:
+          "❓",
+
+        direct:
+          true
+
+      };
+
+
+      $("selectedName")
+        .textContent =
+
+        "❓ そのほかの商品";
+
+
+      $("quickPrices")
+        .innerHTML =
+
+        '<div style="' +
+
+        'grid-column:1/-1;' +
+
+        'font-weight:800;' +
+
+        'color:#62594e;' +
+
+        'line-height:1.5;' +
+
+        '">' +
+
+        'この商品だけは「税込」の金額を入れてください' +
+
+        '</div>';
+
+
+      $("manualPrice")
+        .value =
+        "";
+
+
+      $("manualPrice")
+        .placeholder =
+
+        "税込の値段";
+
+
+      $("pricePanel")
+        .classList
+        .add(
+          "open"
+        );
+
+
+      $("pricePanel")
+        .scrollIntoView({
+
+          behavior:
+            "smooth",
+
+          block:
+            "center"
+
+        });
+
+    }
+
+  );
+
+
+
+/* ====================================
+   SCROLL TO METER
+==================================== */
+
+function scrollToMeter(){
+
+
+  const dashboard =
+    $("dashboard");
+
+
+  if(
+    !dashboard
+  ){
+
+    return;
+
+  }
+
+
+  dashboard
+    .scrollIntoView({
+
+      behavior:
+        "smooth",
+
+      block:
+        "start"
+
+    });
+
+}
+
+
+
+/* ====================================
+   ADD
+==================================== */
+
+$("addButton")
+  .addEventListener(
+
+    "click",
+
+    () => {
+
+
+      initAudio();
+
+
+      if(
+        !selectedProduct
+      ){
+
+        return;
+
+      }
+
+
+
+      const price =
+
+        Math.round(
+
+          Number(
+
+            $("manualPrice")
+              .value
+
+          )
+
+        );
+
+
+
+      if(
+
+        !Number.isFinite(
+          price
+        )
+
+        ||
+
+        price <= 0
+
+      ){
+
+
+        $("status")
+          .textContent =
+
+          "☝️ 値段を入れてください";
+
+
+        return;
+
+      }
+
+
+
+      const beforePercent =
+        currentPercent();
+
+
+
+      const item = {
+
+        name:
+          selectedProduct.name,
+
+        emoji:
+          selectedProduct.emoji,
+
+        price:
+          price,
+
+        rate:
+          selectedProduct.rate
+          ||
+          0,
+
+        direct:
+          !!selectedProduct.direct
+
+      };
+
+
+
+      /* 一度入れて計算 */
+
+      cart.push(
+        item
+      );
+
+
+      const afterPercent =
+        currentPercent();
+
+
+
+      /* ====================================
+         90% SAFETY STOP
+      ==================================== */
+
+      if(
+        afterPercent >= 90
+      ){
+
+
+        cart.pop();
+
+
+        $("status")
+          .textContent =
+
+          "⛔ ここまで！";
+
+
+        showStopAlert();
+
+
+        /* STOP時も
+           メーターに戻る */
+
+        setTimeout(
+
+          () => {
+
+            scrollToMeter();
+
+          },
+
+          250
+
+        );
+
+
+        return;
+
+      }
+
+
+
+      /* ====================================
+         SOUND
+      ==================================== */
+
+
+      if(
+
+        beforePercent < 80
+
+        &&
+
+        afterPercent >= 80
+
+      ){
+
+
+        sound80();
+
+      }
+
+
+      else if(
+
+        beforePercent < 65
+
+        &&
+
+        afterPercent >= 65
+
+      ){
+
+
+        sound65();
+
+      }
+
+
+      else if(
+
+        beforePercent < 50
+
+        &&
+
+        afterPercent >= 50
+
+      ){
+
+
+        sound50();
+
+      }
+
+
+      else if(
+        afterPercent >= 80
+      ){
+
+
+        soundDanger();
+
+      }
+
+
+      else if(
+        afterPercent >= 65
+      ){
+
+
+        soundCaution();
+
+      }
+
+
+      else{
+
+
+        soundNormal();
+
+      }
+
+
+
+      showGet();
+
+
+      closePricePanel();
+
+
+      render();
+
+
+
+      /* ====================================
+         ★ NEW Ver.0.15
+
+         カゴに追加したあと
+         メーターへ自動で戻る
+      ==================================== */
+
+      setTimeout(
+
+        () => {
+
+          scrollToMeter();
+
+        },
+
+        300
+
+      );
+
+    }
+
+  );
+
+
+
+/* ====================================
+   GET POPUP
+==================================== */
+
+function showGet(){
+
+
+  const popup =
+    $("getPopup");
+
+
+  popup
+    .classList
+    .add(
+      "show"
+    );
+
+
+  setTimeout(
+
+    () =>
+
+      popup
+        .classList
+        .remove(
+          "show"
+        ),
+
+    600
+
+  );
+
+}
+
+
+
+/* ====================================
+   STOP ALERT
+==================================== */
+
+function showStopAlert(){
+
+
+  const box =
+    $("overAlert");
+
+
+  box
+    .classList
+    .remove(
+      "show"
+    );
+
+
+  void box.offsetWidth;
+
+
+  box
+    .classList
+    .add(
+      "show"
+    );
+
+
+  soundStop();
+
+
+
+  if(
+    navigator.vibrate
+  ){
+
+
+    navigator.vibrate(
+
+      [
+        120,
+        70,
+        120,
+        70,
+        220
+      ]
+
+    );
+
+  }
+
+
+
+  setTimeout(
+
+    () =>
+
+      box
+        .classList
+        .remove(
+          "show"
+        ),
+
+    1700
+
+  );
+
+}
+
+
+
+/* ====================================
+   CLOSE PRICE
+==================================== */
+
+function closePricePanel(){
+
+
+  $("pricePanel")
+    .classList
+    .remove(
+      "open"
+    );
+
+
+  selectedProduct =
+    null;
+
+
+  $("manualPrice")
+    .value =
+    "";
+
+}
+
+
+
+$("cancelButton")
+  .addEventListener(
+
+    "click",
+
+    closePricePanel
+
+  );
+
+
+
+/* ====================================
+   RENDER
+==================================== */
+
+function render(){
+
+
+  const total =
+    calculateTotal();
+
+
+  const remaining =
+
+    startBalance
+
+    -
+
+    total;
+
+
+
+  const rawPercent =
+
+    startBalance > 0
+
+    ?
+
+    total
+    /
+    startBalance
+    *
+    100
+
+    :
+
+    0;
+
+
+
+  const percent =
+
+    Math.max(
+
+      0,
+
+      Math.min(
+
+        100,
+
+        rawPercent
+
+      )
+
+    );
+
+
+
+  $("startBalanceText")
+    .textContent =
+
+    yen(
+      startBalance
+    );
+
+
+  $("remaining")
+    .textContent =
+
+    yen(
+
+      Math.max(
+        0,
+        remaining
+      )
+
+    );
+
+
+  $("total")
+    .textContent =
+
+    yen(
+      total
+    );
+
+
+  $("count")
+    .textContent =
+
+    cart.length;
+
+
+  $("targetMoney")
+    .textContent =
+
+    yen(
+
+      startBalance
+
+      *
+
+      .50
+
+    );
+
+
+  $("usedPercent")
+    .textContent =
+
+    Math.round(
+      percent
+    )
+
+    +
+
+    "%";
+
+
+
+  /* BAR LENGTH */
+
+  $("meterUsed")
+    .style
+    .width =
+
+    percent
+
+    +
+
+    "%";
+
+
+
+  /* BAR COLOR */
+
+  $("meterUsed")
+    .style
+    .background =
+
+    meterColor(
+      percent
+    );
+
+
+
+  /* STATUS */
+
+  if(
+    percent >= 80
+  ){
+
+
+    $("status")
+      .textContent =
+
+      "🚨 もうすぐストップ";
+
+  }
+
+
+  else if(
+    percent >= 65
+  ){
+
+
+    $("status")
+      .textContent =
+
+      "⚠️ ちょっと気をつけよう";
+
+  }
+
+
+  else if(
+    percent >= 50
+  ){
+
+
+    $("status")
+      .textContent =
+
+      "🎯 50%をこえました";
+
+  }
+
+
+  else{
+
+
+    $("status")
+      .textContent =
+
+      "🟢 まだだいじょうぶ";
+
+  }
+
+
+
+  /* CART */
+
+  $("cart")
+    .innerHTML =
+    "";
+
+
+  cart.forEach(
+
+    (
+      item,
+      index
+    ) => {
+
+
+      const row =
+
+        document
+          .createElement(
+            "div"
+          );
+
+
+      row.className =
+        "cart-item";
+
+
+
+      const left =
+
+        document
+          .createElement(
+            "div"
+          );
+
+
+      left.innerHTML =
+
+        '<div class="cart-name">'
+
+        +
+
+        item.emoji
+
+        +
+
+        " "
+
+        +
+
+        item.name
+
+        +
+
+        '</div>'
+
+        +
+
+        '<div class="cart-info">'
+
+        +
+
+        (
+
+          item.direct
+
+          ?
+
+          "税込価格"
+
+          :
+
+          "値札 "
+
+          +
+
+          yen(
+            item.price
+          )
+
+          +
+
+          "円"
+
+        )
+
+        +
+
+        '</div>';
+
+
+
+      const right =
+
+        document
+          .createElement(
+            "div"
+          );
+
+
+      right.className =
+        "cart-right";
+
+
+
+      const amount =
+
+        document
+          .createElement(
+            "div"
+          );
+
+
+      amount.className =
+        "cart-price";
+
+
+      amount.textContent =
+
+        (
+
+          item.direct
+
+          ?
+
+          ""
+
+          :
+
+          "約 "
+
+        )
+
+        +
+
+        yen(
+
+          itemTaxPrice(
+            item
+          )
+
+        )
+
+        +
+
+        "円";
+
+
+
+      const del =
+
+        document
+          .createElement(
+            "button"
+          );
+
+
+      del.type =
+        "button";
+
+
+      del.className =
+        "delete-button";
+
+
+      del.textContent =
+        "✕ けす";
+
+
+      del.addEventListener(
+
+        "click",
+
+        () => {
+
+
+          cart.splice(
+
+            index,
+
+            1
+
+          );
+
+
+          render();
+
+
+          /* 削除時も
+             メーターを確認 */
+
+          setTimeout(
+
+            () => {
+
+              scrollToMeter();
+
+            },
+
+            150
+
+          );
+
+        }
+
+      );
+
+
+
+      right.appendChild(
+        amount
+      );
+
+
+      right.appendChild(
+        del
+      );
+
+
+      row.appendChild(
+        left
+      );
+
+
+      row.appendChild(
+        right
+      );
+
+
+      $("cart")
+        .appendChild(
+          row
+        );
+
+    }
+
+  );
+
+
+
+  $("empty")
+    .style
+    .display =
+
+    cart.length
+
+    ?
+
+    "none"
+
+    :
+
+    "block";
+
+}
+
+
+
+/* ====================================
+   START
+==================================== */
+
+$("startButton")
+  .addEventListener(
+
+    "click",
+
+    () => {
+
+
+      initAudio();
+
+
+
+      const value =
+
+        Math.round(
+
+          Number(
+
+            $("balanceInput")
+              .value
+
+          )
+
+        );
+
+
+
+      if(
+
+        !Number.isFinite(
+          value
+        )
+
+        ||
+
+        value <= 0
+
+      ){
+
+
+        alert(
+
+          "カード残高を入れてください"
+
+        );
+
+
+        return;
+
+      }
+
+
+
+      startBalance =
+        value;
+
+
+      cart =
+        [];
+
+
+
+      $("startScreen")
+        .style
+        .display =
+
+        "none";
+
+
+      $("shopScreen")
+        .style
+        .display =
+
+        "block";
+
+
+      $("finishScreen")
+        .style
+        .display =
+
+        "none";
+
+
+
+      render();
+
+
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+
+  );
+
+
+
+/* ====================================
+   UNDO
+==================================== */
+
+$("undo")
+  .addEventListener(
+
+    "click",
+
+    () => {
+
+
+      if(
+        cart.length
+      ){
+
+
+        cart.pop();
+
+
+        render();
+
+
+        setTimeout(
+
+          () => {
+
+            scrollToMeter();
+
+          },
+
+          150
+
+        );
+
+      }
+
+    }
+
+  );
+
+
+
+/* ====================================
+   RESTART
+==================================== */
+
+$("restart")
+  .addEventListener(
+
+    "click",
+
+    () => {
+
+
+      if(
+
+        !confirm(
+
+          "買い物を最初からやり直しますか？"
+
+        )
+
+      ){
+
+        return;
+
+      }
+
+
+      cart =
+        [];
+
+
+      closePricePanel();
+
+
+      $("shopScreen")
+        .style
+        .display =
+
+        "none";
+
+
+      $("finishScreen")
+        .style
+        .display =
+
+        "none";
+
+
+      $("startScreen")
+        .style
+        .display =
+
+        "block";
+
+
+      $("balanceInput")
+        .value =
+
+        startBalance;
+
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+
+  );
+
+
+
+/* ====================================
+   CHECKOUT
+==================================== */
+
+$("checkout")
+  .addEventListener(
+
+    "click",
+
+    () => {
+
+
+      initAudio();
+
+
+
+      if(
+        cart.length === 0
+      ){
+
+
+        $("status")
+          .textContent =
+
+          "🛒 まだ商品がありません";
+
+
+        return;
+
+      }
+
+
+
+      soundCheckout();
+
+
+
+      const total =
+        calculateTotal();
+
+
+      const remain =
+
+        startBalance
+
+        -
+
+        total;
+
+
+      const percent =
+
+        total
+
+        /
+
+        startBalance
+
+        *
+
+        100;
+
+
+
+      $("finishTotal")
+        .textContent =
+
+        yen(
+          total
+        );
+
+
+      $("finishRemaining")
+        .textContent =
+
+        yen(
+          remain
+        );
+
+
+      $("resultSub")
+        .textContent =
+
+        "準備できた。";
+
+
+
+      if(
+        percent >= 80
+      ){
+
+
+        $("resultBadge")
+          .textContent =
+
+          "🚨 ここでレジへ";
+
+
+        $("resultBadge")
+          .style
+          .background =
+
+          "#ffd8dd";
+
+      }
+
+
+      else if(
+        percent >= 65
+      ){
+
+
+        $("resultBadge")
+          .textContent =
+
+          "⚠️ 予算の中です";
+
+
+        $("resultBadge")
+          .style
+          .background =
+
+          "#fff0b9";
+
+      }
+
+
+      else if(
+
+        percent >= 45
+
+        &&
+
+        percent <= 55
+
+      ){
+
+
+        $("resultBadge")
+          .textContent =
+
+          "🎯 50%もくひょう！";
+
+
+        $("resultBadge")
+          .style
+          .background =
+
+          "#dff8e8";
+
+      }
+
+
+      else{
+
+
+        $("resultBadge")
+          .textContent =
+
+          "⭐ 予算の中です";
+
+
+        $("resultBadge")
+          .style
+          .background =
+
+          "#dfefff";
+
+      }
+
+
+
+      $("shopScreen")
+        .style
+        .display =
+
+        "none";
+
+
+      $("finishScreen")
+        .style
+        .display =
+
+        "block";
+
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+
+  );
+
+
+
+/* ====================================
+   RESULT BACK
+==================================== */
+
+$("backButton")
+  .addEventListener(
+
+    "click",
+
+    () => {
+
+
+      $("finishScreen")
+        .style
+        .display =
+
+        "none";
+
+
+      $("shopScreen")
+        .style
+        .display =
+
+        "block";
+
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+
+  );
+
+
+
+/* ====================================
+   INIT
+==================================== */
+
+renderProducts();
+
+render();
+
+
+})();
+
+</script>
+
+</body>
+</html>
