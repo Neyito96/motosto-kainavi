@@ -113,22 +113,19 @@ button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}
 (()=>{
 const $=id=>document.getElementById(id);
 const PRODUCTS=[
-{name:"アクエリアスゼロ",emoji:"💧",price:98,rate:8,favorite:true},
-{name:"ドンタコス",emoji:"🌮",price:100,rate:8,favorite:true},
-{name:"ポテトチップス",emoji:"🥔",price:98,rate:8,favorite:true},
-{name:"カップヌードル シーフード",emoji:"🍜",price:288,rate:8,favorite:true},
-{name:"アーモンドチョコ",emoji:"🍫",price:268,rate:8,favorite:true},
-{name:"柿の種チョコ",emoji:"🍘🍫",price:298,rate:8,favorite:true},
+{name:"アクエリアス",emoji:"💧",price:98,rate:8,favorite:true},
+{name:"アクエリアスゼロ",emoji:"💧",price:108,rate:8,favorite:true},
 {name:"チップスター",emoji:"🥔",price:128,rate:8},
+{name:"油そば",emoji:"🍜",price:158,rate:8},
+{name:"ポテチ",emoji:"🥔",price:98,rate:8,favorite:true},
+{name:"ドンタコス",emoji:"🌮",price:118,rate:8,favorite:true},
+{name:"１９６缶酎ハイ",emoji:"🥫",price:128,rate:10},
 {name:"ピザポテト",emoji:"🍕",price:148,rate:8},
-{name:"カップヌードル BIG",emoji:"🍜",price:288,rate:8},
-{name:"カップヌードル チリトマト",emoji:"🍅🍜",price:288,rate:8},
+{name:"カップヌードル",emoji:"🍜",price:288,rate:8,favorite:true},
+{name:"アーモンドチョコ",emoji:"🍫",price:268,rate:8,favorite:true},
+{name:"ピーナッツチョコ",emoji:"🥜🍫",price:268,rate:8,favorite:true},
 {name:"超大盛やきそば",emoji:"🍝",price:238,rate:8},
-{name:"油そば",emoji:"🍜",price:278,rate:8},
-{name:"かっぱえびせん",emoji:"🦐",price:128,rate:8},
-{name:"まろやかチーズ",emoji:"🧀",price:138,rate:8},
-{name:"キシリトールガム",emoji:"🍬",price:498,rate:8},
-{name:"196 缶チューハイ",emoji:"🥫",price:128,rate:10}
+{name:"かっぱえびせん",emoji:"🦐",price:128,rate:8}
 ];
 let cart=[],budget=2500,selected=null,audioCtx=null;
 function yen(n){return Math.round(n).toLocaleString("ja-JP")}
