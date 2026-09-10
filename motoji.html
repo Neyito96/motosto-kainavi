@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#e42b3d">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>モトスト かいものナビ｜基治さん</title>
+<style>
+:root{--red:#e42b3d;--red2:#b71f31;--blue:#1486d4;--blue2:#07589b;--yellow:#ffd84a;--cream:#fffaf0;--ink:#17243a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:radial-gradient(circle at 12% 3%,rgba(255,255,255,.3),transparent 17%),linear-gradient(145deg,#ef3448 0%,#cf2036 43%,#1582cf 100%);color:var(--ink);-webkit-text-size-adjust:100%}
+button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}
+.app{max-width:640px;margin:auto;padding:12px 12px calc(72px + env(safe-area-inset-bottom))}
+.hidden{display:none!important}
+.hero,.panel{border:3px solid #fff;border-radius:24px;box-shadow:0 6px 0 rgba(49,25,44,.18),0 10px 20px rgba(17,31,55,.14)}
+.hero{padding:17px 12px 20px;text-align:center;color:#fff;background:linear-gradient(145deg,#ef3a4b,#c81f36 52%,#147fca);margin-bottom:12px}
+.quest{color:var(--yellow);font-size:12px;letter-spacing:4px;font-weight:1000}
+.title{font-size:38px;line-height:1;font-weight:1000;text-shadow:0 3px 0 rgba(70,8,18,.3);margin-top:5px}
+.sub{font-size:27px;font-weight:1000;margin-top:6px}.version{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:99px;background:#fff;color:var(--red);font-size:11px;font-weight:1000}
+.purpose{margin-top:13px;padding:13px;border-radius:17px;background:#fffffff2;color:var(--blue2);font-weight:900;line-height:1.55}
+.panel{background:var(--cream);padding:15px;margin-bottom:13px}.big{text-align:center;color:var(--blue2);font-size:26px;font-weight:1000}.help{text-align:center;color:#655d58;font-weight:800;line-height:1.55;margin-top:7px}
+.balance{width:100%;height:86px;margin-top:16px;border:4px solid var(--blue);border-radius:20px;background:#fff;color:var(--blue2);text-align:center;font-size:43px;font-weight:1000}
+.primary,.secondary{width:100%;border-radius:18px;font-weight:1000;margin-top:11px}.primary{min-height:72px;border:3px solid #fff;background:linear-gradient(#2097e7,#0764b3);color:#fff;box-shadow:0 6px 0 #064883;font-size:21px}.secondary{min-height:52px;border:2px solid #cbd9e6;background:#fff;color:var(--blue2)}
+.dashboard{color:#fff;background:linear-gradient(145deg,#1689d8,#075b9f 60%,#173d79);border-color:#bfeaff}.remain{font-size:53px;font-weight:1000;line-height:1.05}
+.meter-head{display:flex;justify-content:space-between;margin-top:15px;font-size:12px;font-weight:900;color:#d6efff}.meter{position:relative;height:35px;padding:4px;border:2px solid #fff;border-radius:99px;background:#043764;overflow:hidden;margin-top:6px}.used{height:100%;width:0;border-radius:99px;background:#188ee5;transition:.35s}
+.mark{position:absolute;top:0;bottom:0;z-index:3}.m50{left:50%;width:4px;background:#fff}.m65{left:65%;width:3px;background:#ffe14f}.m80{left:80%;width:4px;background:#ff747d}.m90{left:90%;width:5px;background:#fff;box-shadow:0 0 7px #ff2638}
+.labels{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:7px}.labels div{text-align:center;padding:5px 1px;border-radius:9px;font-size:9px;font-weight:1000;background:#fff;color:var(--blue2)}
+.status{margin-top:11px;padding:11px;border-radius:14px;background:#ffffff24;text-align:center;font-size:18px;font-weight:1000}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}.stat{padding:8px 3px;border-radius:13px;background:#fff;color:var(--blue2);text-align:center;font-weight:1000}
+.section{margin:22px 4px 8px;color:#fff;font-size:23px;font-weight:1000}.products{display:grid;grid-template-columns:1fr 1fr;gap:10px}.product{position:relative;min-height:138px;padding:12px;text-align:left;border:3px solid #fff;border-radius:21px;background:linear-gradient(#fff,#eef8ff);color:var(--blue2);box-shadow:0 5px 0 #981f32}.product.favorite{background:linear-gradient(#fff8c6,#ffdc4c)}.emoji{display:block;font-size:38px;min-height:48px}.name{display:block;min-height:38px;font-size:16px;line-height:1.18;font-weight:1000}.price{display:inline-block;margin-top:7px;padding:4px 8px;border-radius:10px;background:var(--red);color:#fff;font-size:17px;font-weight:1000}.star{position:absolute;top:7px;right:8px;color:#ff9d00;font-size:22px}
+.pricebox{display:none;border-color:var(--yellow);background:#fffce9}.pricebox.open{display:block}.quick{display:grid;grid-template-columns:1fr;gap:8px;margin-top:13px}.quick button{min-height:62px;border:3px solid #fff;border-radius:15px;background:linear-gradient(#2595e3,#0961ac);color:#fff;font-size:22px;font-weight:1000}.manual{width:100%;height:67px;margin-top:12px;border:3px solid var(--blue);border-radius:15px;background:#fff;color:var(--blue2);text-align:center;font-size:30px;font-weight:1000}
+.cartrow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:11px 4px;border-bottom:2px dashed #dae4ed}.del{min-height:42px;border:2px solid #ffb3bb;border-radius:12px;background:#ffe3e6;color:#b51e30;font-weight:1000}
+.get{position:fixed;left:50%;top:43%;transform:translate(-50%,-50%) scale(.5);opacity:0;pointer-events:none;z-index:100;padding:15px 25px;border:4px solid #fff;border-radius:21px;background:linear-gradient(#ffe44c,#ffab1e);color:#5a2c00;font-size:30px;font-weight:1000;box-shadow:0 9px 30px rgba(0,0,0,.28);transition:.18s}.get.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.stop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:120;background:#0008;padding:25px}.stop.show{display:flex}.stopcard{width:min(420px,100%);padding:25px;border:5px solid #fff;border-radius:26px;background:#ffe8ea;text-align:center;color:#a40018;font-size:26px;font-weight:1000}
+.finish{text-align:center}.finish .money{font-size:46px;color:var(--red);font-weight:1000}.finish .left{font-size:30px;color:var(--blue);font-weight:1000}
+.info{margin-top:24px;text-align:center;color:#fff;font-size:12px;font-weight:900;opacity:.9}
+@media(max-width:360px){.title{font-size:33px}.products{gap:8px}.remain{font-size:45px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero">
+<div class="quest">QUEST MODE</div>
+<div class="title">⚡ モトスト</div>
+<div class="sub">かいものナビ</div>
+<div class="version">基治さん専用 Ver.1.0｜2026.09.10</div>
+<div class="purpose">🛒 カゴに入れたら、ここでも同じ商品をタップ！<br>お金を見ながらミッションをクリアしよう。</div>
+</header>
+
+<section id="startScreen" class="panel">
+<div class="big">💰 きょうの おこづかい</div>
+<div class="help">いつもの金額は 2,500円。<br>ちがう日は数字を変えてOK。</div>
+<input id="balance" class="balance" type="number" inputmode="numeric" value="2500">
+<button id="startBtn" class="primary">⚡ かいものスタート！</button>
+<button id="testSoundBtn" class="secondary">🔊 音をためす</button>
+</section>
+
+<section id="shopScreen" class="hidden">
+<section id="dashboard" class="panel dashboard">
+<div>💰 おこづかい <strong><span id="budgetText">2,500</span>円</strong></div>
+<div style="margin-top:10px;color:#d6efff;font-weight:900">⭐ あと つかえる お金</div>
+<div class="remain"><span id="remaining">2,500</span>円</div>
+<div class="meter-head"><span>つかった割合</span><span id="percent">0%</span></div>
+<div class="meter"><div id="used" class="used"></div><div class="mark m50"></div><div class="mark m65"></div><div class="mark m80"></div><div class="mark m90"></div></div>
+<div class="labels"><div>50%<br>目標</div><div>65%<br>注意</div><div>80%<br>警戒</div><div>90%<br>STOP</div></div>
+<div id="status" class="status">🟢 まだだいじょうぶ</div>
+<div class="stats"><div class="stat">はらう<br><span id="total">0</span>円</div><div class="stat">商品<br><span id="count">0</span>こ</div><div class="stat">目標<br><span id="goal">1,250</span>円</div></div>
+</section>
+
+<div class="section">🎮 いつもの商品</div>
+<div id="products" class="products"></div>
+
+<section id="priceBox" class="panel pricebox">
+<div id="selectedName" class="big"></div>
+<div class="help">値札の大きい数字と同じ金額を確認しよう</div>
+<div id="quick" class="quick"></div>
+<input id="manualPrice" class="manual" type="number" inputmode="numeric">
+<button id="addBtn" class="primary">🛒 カゴに追加</button>
+<button id="cancelBtn" class="secondary">やめる</button>
+</section>
+
+<div class="section">❓ リストにない商品</div>
+<button id="otherBtn" class="secondary" style="border:3px dashed #fff;background:#1486d4;color:#fff;min-height:68px">＋ ほかの商品を入れる</button>
+<section id="otherBox" class="panel hidden" style="margin-top:10px">
+<div class="big">❓ ほかの商品</div>
+<div class="help">この商品だけは税込の金額を入れよう</div>
+<input id="otherName" class="manual" type="text" placeholder="しょうひん名" style="font-size:20px">
+<input id="otherPrice" class="manual" type="number" inputmode="numeric" placeholder="税込の値段">
+<button id="addOtherBtn" class="primary">🛒 カゴに追加</button>
+</section>
+
+<div class="section">🧾 カゴの中</div>
+<section class="panel"><div id="empty" class="help">まだ商品はありません</div><div id="cart"></div></section>
+<button id="checkoutBtn" class="primary">🏁 レジへ行く</button>
+<button id="restartBtn" class="secondary">🔄 最初から</button>
+</section>
+
+<section id="finishScreen" class="panel finish hidden">
+<div style="font-size:40px">🏁✨</div><div class="big">ミッションクリア！</div>
+<div style="margin-top:15px">レジではらう金額</div><div class="money"><span id="finishTotal">0</span>円</div>
+<div>買ったあとの残り</div><div class="left">あと <span id="finishRemain">0</span>円</div>
+<button id="backBtn" class="secondary">← 商品えらびにもどる</button>
+</section>
+
+<div class="info">モトスト かいものナビ｜基治さん専用<br>元の Ver.0.24.1c は変更していません。</div>
+</div>
+<div id="getPopup" class="get">GET! ⭐</div>
+<div id="stopAlert" class="stop"><div class="stopcard">⛔ ここまで！<br><span style="font-size:19px">レジのために<br>お金をのこそう</span></div></div>
+
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const PRODUCTS=[
+{name:"アクエリアスゼロ",emoji:"💧",price:98,rate:8,favorite:true},
+{name:"ドンタコス",emoji:"🌮",price:100,rate:8,favorite:true},
+{name:"ポテトチップス",emoji:"🥔",price:98,rate:8,favorite:true},
+{name:"カップヌードル シーフード",emoji:"🍜",price:288,rate:8,favorite:true},
+{name:"アーモンドチョコ",emoji:"🍫",price:268,rate:8,favorite:true},
+{name:"柿の種チョコ",emoji:"🍘🍫",price:298,rate:8,favorite:true},
+{name:"チップスター",emoji:"🥔",price:128,rate:8},
+{name:"ピザポテト",emoji:"🍕",price:148,rate:8},
+{name:"カップヌードル BIG",emoji:"🍜",price:288,rate:8},
+{name:"カップヌードル チリトマト",emoji:"🍅🍜",price:288,rate:8},
+{name:"超大盛やきそば",emoji:"🍝",price:238,rate:8},
+{name:"油そば",emoji:"🍜",price:278,rate:8},
+{name:"かっぱえびせん",emoji:"🦐",price:128,rate:8},
+{name:"まろやかチーズ",emoji:"🧀",price:138,rate:8},
+{name:"キシリトールガム",emoji:"🍬",price:498,rate:8},
+{name:"196 缶チューハイ",emoji:"🥫",price:128,rate:10}
+];
+let cart=[],budget=2500,selected=null,audioCtx=null;
+function yen(n){return Math.round(n).toLocaleString("ja-JP")}
+function itemTotal(x){return x.direct?x.price:Math.floor(x.price*(1+(x.rate||8)/100))}
+function total(){return cart.reduce((s,x)=>s+itemTotal(x),0)}
+function pct(){return budget?total()/budget*100:0}
+function initAudio(){const A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!audioCtx)audioCtx=new A();if(audioCtx.state==="suspended")audioCtx.resume()}
+function tone(f,d,delay=0,type="sine",v=.12){if(!audioCtx)return;const s=audioCtx.currentTime+delay,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.setValueAtTime(f,s);g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(v,s+.01);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(audioCtx.destination);o.start(s);o.stop(s+d+.03)}
+function sound(k){initAudio();if(k==="50"){tone(660,.08);tone(880,.09,.08);tone(1100,.1,.16);tone(1500,.18,.25)}else if(k==="65"){tone(720,.1,0,"triangle");tone(620,.11,.12,"triangle");tone(520,.18,.24,"square")}else if(k==="80"){tone(520,.1,0,"square");tone(420,.13,.12,"square");tone(520,.1,.29,"square");tone(370,.19,.42,"square")}else if(k==="90"){tone(220,.15,0,"square");tone(160,.2,.16,"square");tone(140,.32,.4,"square")}else{tone(950,.07);tone(1300,.1,.06);tone(1700,.1,.13)}}
+function meterColor(p){let h=p<=50?210-(p/50)*85:p<=65?125-((p-50)/15)*70:p<=80?55-((p-65)/15)*30:25-((p-80)/20)*25;return `hsl(${Math.max(0,h)},85%,50%)`}
+function renderProducts(){const box=$("products");PRODUCTS.forEach((p,i)=>{const b=document.createElement("button");b.className="product"+(p.favorite?" favorite":"");b.innerHTML=(p.favorite?'<span class="star">★</span>':'')+`<span class="emoji">${p.emoji}</span><span class="name">${p.name}</span><span class="price">${p.price}円</span>`;b.onclick=()=>openProduct(i);box.appendChild(b)})}
+function openProduct(i){selected=PRODUCTS[i];$("selectedName").textContent=selected.emoji+" "+selected.name;$("quick").innerHTML=`<button>${selected.price}円</button>`;$("manualPrice").value=selected.price;$("priceBox").classList.add("open");$("priceBox").scrollIntoView({behavior:"smooth",block:"center"})}
+function addItem(item){const before=pct();cart.push(item);const after=pct();if(after>=90){cart.pop();sound("90");$("stopAlert").classList.add("show");if(navigator.vibrate)navigator.vibrate([130,70,130,70,220]);setTimeout(()=>$("stopAlert").classList.remove("show"),1700);setTimeout(()=>$("dashboard").scrollIntoView({behavior:"smooth"}),250);return false}
+sound(before<50&&after>=50?"50":before<65&&after>=65?"65":before<80&&after>=80?"80":after>=80?"80":after>=65?"65":"normal");
+$("getPopup").classList.add("show");setTimeout(()=>$("getPopup").classList.remove("show"),600);render();setTimeout(()=>$("dashboard").scrollIntoView({behavior:"smooth",block:"start"}),250);return true}
+function render(){const t=total(),p=Math.min(100,pct());$("budgetText").textContent=yen(budget);$("remaining").textContent=yen(Math.max(0,budget-t));$("percent").textContent=Math.round(p)+"%";$("used").style.width=p+"%";$("used").style.background=meterColor(p);$("total").textContent=yen(t);$("count").textContent=cart.length;$("goal").textContent=yen(budget*.5);$("status").textContent=p>=80?"🚨 もうすぐストップ":p>=65?"⚠️ ちょっと気をつけよう":p>=50?"🎯 50%をこえました":"🟢 まだだいじょうぶ";$("cart").innerHTML="";cart.forEach((x,i)=>{const r=document.createElement("div");r.className="cartrow";r.innerHTML=`<div><b>${x.emoji} ${x.name}</b><br><small>${x.direct?"税込 "+yen(x.price):"値札 "+yen(x.price)+" → 約 "+yen(itemTotal(x))}円</small></div><button class="del">✕ けす</button>`;r.lastChild.onclick=()=>{cart.splice(i,1);render()};$("cart").appendChild(r)});$("empty").style.display=cart.length?"none":"block"}
+$("testSoundBtn").onclick=()=>sound("normal");
+$("startBtn").onclick=()=>{initAudio();budget=Math.max(1,Math.round(+$("balance").value||2500));cart=[];$("startScreen").classList.add("hidden");$("shopScreen").classList.remove("hidden");render();scrollTo(0,0)};
+$("cancelBtn").onclick=()=>{$("priceBox").classList.remove("open");selected=null};
+$("addBtn").onclick=()=>{const price=Math.round(+$("manualPrice").value);if(!selected||!price)return;if(addItem({name:selected.name,emoji:selected.emoji,price,rate:selected.rate})){$("priceBox").classList.remove("open");selected=null}};
+$("otherBtn").onclick=()=>{$("otherBox").classList.toggle("hidden")};
+$("addOtherBtn").onclick=()=>{const name=$("otherName").value.trim(),price=Math.round(+$("otherPrice").value);if(!name||!price)return;if(addItem({name,emoji:"🛒",price,rate:0,direct:true})){$("otherName").value="";$("otherPrice").value="";$("otherBox").classList.add("hidden")}};
+$("restartBtn").onclick=()=>{if(confirm("買い物を最初からやり直しますか？")){cart=[];$("shopScreen").classList.add("hidden");$("startScreen").classList.remove("hidden");$("balance").value=budget;scrollTo(0,0)}};
+$("checkoutBtn").onclick=()=>{if(!cart.length)return;const t=total();$("finishTotal").textContent=yen(t);$("finishRemain").textContent=yen(budget-t);$("shopScreen").classList.add("hidden");$("finishScreen").classList.remove("hidden");initAudio();tone(1550,.07,0,"square");tone(500,.08,.17,"triangle");tone(780,.09,.23,"triangle");scrollTo(0,0)};
+$("backBtn").onclick=()=>{$("finishScreen").classList.add("hidden");$("shopScreen").classList.remove("hidden");scrollTo(0,0)};
+renderProducts();render();
+})();
+</script>
+</body>
+</html>
